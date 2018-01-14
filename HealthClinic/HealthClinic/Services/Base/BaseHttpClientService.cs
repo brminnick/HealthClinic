@@ -117,7 +117,7 @@ namespace HealthClinic
             }
         }
 
-        protected static Task<HttpResponseMessage> DeleteObjectFromAPI(string apiUrl)
+        protected static async Task<HttpResponseMessage> DeleteObjectFromAPI(string apiUrl)
         {
             var httpRequest = new HttpRequestMessage(HttpMethod.Delete, new Uri(apiUrl));
 
@@ -125,7 +125,7 @@ namespace HealthClinic
             {
                 UpdateActivityIndicatorStatus(true);
 
-                return Client.SendAsync(httpRequest);
+                return await Client.SendAsync(httpRequest);
             }
             catch (Exception e)
             {
