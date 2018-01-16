@@ -9,6 +9,7 @@ using System.Net.Http.Headers;
 using Newtonsoft.Json;
 
 using Xamarin.Forms;
+using HealthClinic.Shared;
 
 namespace HealthClinic
 {
@@ -16,7 +17,7 @@ namespace HealthClinic
     {
         #region Constant Fields
         static readonly Lazy<JsonSerializer> _serializerHolder = new Lazy<JsonSerializer>();
-        static readonly Lazy<HttpClient> _clientHolder = new Lazy<HttpClient>(() => CreateHttpClient(TimeSpan.FromSeconds(60)));
+        static readonly Lazy<HttpClient> _clientHolder = new Lazy<HttpClient>(() => CreateHttpClient(TimeSpan.FromSeconds(10)));
         #endregion
 
         #region Fields
@@ -31,11 +32,11 @@ namespace HealthClinic
         #region Methods
         protected static Task<T> GetDataObjectFromAPI<T>(string apiUrl) => GetDataObjectFromAPI<T, object>(apiUrl);
 
-        protected static async Task<TDataObject> GetDataObjectFromAPI<TDataObject, TPayloadData>(string apiUrl, TPayloadData data = default(TPayloadData))
+        protected static async Task<TDataObject> GetDataObjectFromAPI<TDataObject, TPayloadData>(string apiUrl, TPayloadData data = default)
         {
             var stringPayload = string.Empty;
 
-            if (data != null)
+            if (data?.Equals(default) == true)
                 stringPayload = await Task.Run(() => JsonConvert.SerializeObject(data)).ConfigureAwait(false);
 
             var httpContent = new StringContent(stringPayload, Encoding.UTF8, "application/json");
@@ -56,7 +57,7 @@ namespace HealthClinic
             }
             catch (Exception e)
             {
-                InsightsHelpers.Report(e);
+                DebugHelpers.PrintException(e);
                 return default;
             }
             finally
@@ -78,7 +79,7 @@ namespace HealthClinic
             }
             catch (Exception e)
             {
-                InsightsHelpers.Report(e);
+                DebugHelpers.PrintException(e);
                 return null;
             }
             finally
@@ -108,7 +109,7 @@ namespace HealthClinic
             }
             catch (Exception e)
             {
-                InsightsHelpers.Report(e);
+                DebugHelpers.PrintException(e);
                 return null;
             }
             finally
@@ -129,7 +130,7 @@ namespace HealthClinic
             }
             catch (Exception e)
             {
-                InsightsHelpers.Report(e);
+                DebugHelpers.PrintException(e);
                 return null;
             }
             finally
@@ -142,12 +143,12 @@ namespace HealthClinic
         {
             if (isActivityIndicatorDisplayed)
             {
-                XamarinFormsHelpers.BeginInvokeOnMainThread(() => BlackIconTabbedPage.Instance.IsBusy = true);
+                Device.BeginInvokeOnMainThread(() => Application.Current.MainPage.IsBusy = true);
                 _networkIndicatorCount++;
             }
             else if (--_networkIndicatorCount <= 0)
             {
-                XamarinFormsHelpers.BeginInvokeOnMainThread(() => BlackIconTabbedPage.Instance.IsBusy = false);
+                Device.BeginInvokeOnMainThread(() => Application.Current.MainPage.IsBusy = false);
                 _networkIndicatorCount = 0;
             }
         }
@@ -168,8 +169,7 @@ namespace HealthClinic
 
             }
             client.Timeout = timeout;
-            client.DefaultRequestHeaders.Add("ZUMO-API-VERSION", "2.0.0");
-            client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+            //client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
 
             return client;
         }
