@@ -17,7 +17,7 @@ namespace HealthClinic
         #endregion
 
         #region Constructors
-        public AddFoodPage() : base(PageTitleConstants.FoodListPage)
+        public AddFoodPage() : base(PageTitleConstants.AddFoodPage)
         {
             _takePhotoButton = new Button
             {
