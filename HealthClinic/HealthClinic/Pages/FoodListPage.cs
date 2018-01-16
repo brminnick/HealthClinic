@@ -44,6 +44,8 @@ namespace HealthClinic
         protected override void SubscribeEventHandlers()
         {
             _addFoodButton.Clicked += HandleAddFoodButtonClicked;
+            _foodListView.ItemSelected += HandleItemSelected;
+
         }
 
         protected override void UnsubscribeEventHandlers()
@@ -53,5 +55,7 @@ namespace HealthClinic
 
         void HandleAddFoodButtonClicked(object sender, EventArgs e) =>
             Device.BeginInvokeOnMainThread(async () => await Navigation.PushModalAsync(new HealthClinicNavigationPage(new AddFoodPage())));
+
+        void HandleItemSelected(object sender, SelectedItemChangedEventArgs e) => _foodListView.SelectedItem = null;
     }
 }
