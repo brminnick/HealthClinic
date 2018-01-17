@@ -1,4 +1,5 @@
 ﻿using System;
+
 using Xamarin.Forms;
 
 using HealthClinic.Shared;
@@ -12,6 +13,7 @@ namespace HealthClinic
         readonly ToolbarItem _addFoodButton;
         #endregion
 
+        #region Constructors
         public FoodListPage() : base(PageTitleConstants.FoodListPage)
         {
             _addFoodButton = new ToolbarItem
@@ -21,12 +23,14 @@ namespace HealthClinic
             };
             ToolbarItems.Add(_addFoodButton);
 
-            _foodListView = new ListView
+            _foodListView = new ListView(ListViewCachingStrategy.RecycleElement)
             {
                 ItemTemplate = new DataTemplate(typeof(FoodViewCell)),
                 IsPullToRefreshEnabled = true,
                 AutomationId = AutomationIdConstants.FoodListPage_FoodList,
-                BackgroundColor = Color.Transparent
+                BackgroundColor = ColorConstants.OffWhite,
+                SeparatorVisibility = SeparatorVisibility.None,
+                RowHeight = 230
             };
             _foodListView.SetBinding(ListView.ItemsSourceProperty, nameof(ViewModel.FoodList));
             _foodListView.SetBinding(ListView.IsRefreshingProperty, nameof(ViewModel.IsRefreshing));
@@ -34,7 +38,9 @@ namespace HealthClinic
 
             Content = _foodListView;
         }
+        #endregion
 
+        #region Methods
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -58,5 +64,6 @@ namespace HealthClinic
             Device.BeginInvokeOnMainThread(async () => await Navigation.PushModalAsync(new HealthClinicNavigationPage(new AddFoodPage())));
 
         void HandleItemSelected(object sender, SelectedItemChangedEventArgs e) => _foodListView.SelectedItem = null;
+        #endregion
     }
 }

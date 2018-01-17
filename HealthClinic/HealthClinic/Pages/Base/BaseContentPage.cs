@@ -1,7 +1,4 @@
 ﻿using Xamarin.Forms;
-
-using HealthClinic.Shared;
-
 namespace HealthClinic
 {
     public abstract class BaseContentPage<T> : ContentPage where T : BaseViewModel, new()
@@ -12,7 +9,7 @@ namespace HealthClinic
             ViewModel = new T();
             BindingContext = ViewModel;
             Title = pageTitle;
-            BackgroundColor = Color.FromHex(ColorConstants.PageBackgroundHex);
+            BackgroundColor = ColorConstants.Aqua;
         }
         #endregion
 

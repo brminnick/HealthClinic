@@ -3,7 +3,6 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
-using HealthClinic;
 using HealthClinic.iOS;
 
 [assembly: ExportRenderer(typeof(ViewCell), typeof(ViewCellCustomRenderer))]
@@ -14,8 +13,7 @@ namespace HealthClinic.iOS
 		public override UITableViewCell GetCell(Cell item, UITableViewCell reusableCell, UITableView tv)
 		{
 			var cell = base.GetCell(item, reusableCell, tv);
-
-			cell.Accessory = UITableViewCellAccessory.DisclosureIndicator;
+            cell.SelectionStyle = UITableViewCellSelectionStyle.None;
 
 			return cell;
 		}

@@ -15,7 +15,6 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\DebugHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constants\PageTitleConstants.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Constants\ColorConstants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constants\AutomationIdConstants.cs" />
   </ItemGroup>
 </Project>

@@ -70,6 +70,12 @@ namespace HealthClinic
             {
                 var postPhotoBlobResponse = await FoodListAPIService.PostFoodPhoto(_photoBlob).ConfigureAwait(false);
 
+                if (postPhotoBlobResponse?.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+                {
+                    OnUploadPhotoFailed("No Food Found");
+                    return;
+                }
+
                 if (postPhotoBlobResponse == null || postPhotoBlobResponse?.IsSuccessStatusCode == false)
                 {
                     OnUploadPhotoFailed($"Status Code: {postPhotoBlobResponse?.ReasonPhrase}");

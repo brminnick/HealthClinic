@@ -8,8 +8,8 @@ namespace HealthClinic
     {
         public HealthClinicNavigationPage(Page root) : base(root)
         {
-            BarTextColor = Color.FromHex(ColorConstants.NavigationBarTextHex);
-            BarBackgroundColor = Color.FromHex(ColorConstants.NavigationBarBackgroundHex);
+            BarTextColor = ColorConstants.OffWhite;
+            BarBackgroundColor = ColorConstants.Maroon;
         }
     }
 }

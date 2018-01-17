@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using System.Linq;
 
 namespace HealthClinic
 {
@@ -38,7 +39,8 @@ namespace HealthClinic
 
             try
             {
-                FoodList = await FoodListAPIService.GetFoodLogs();
+                var unsortedFoodList = await FoodListAPIService.GetFoodLogs();
+                FoodList = unsortedFoodList.OrderBy(x => x.MealTime).ToList();
             }
             finally
             {

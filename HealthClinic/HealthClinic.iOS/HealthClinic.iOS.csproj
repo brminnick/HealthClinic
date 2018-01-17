@@ -153,6 +153,8 @@
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Custom Renderers\ContentPageCustomRenderer.cs" />
     <Compile Include="Custom Renderers\ViewCellCustomRenderer.cs" />
+    <Compile Include="Custom Renderers\NavigationPageCustomRenderer.cs" />
+    <Compile Include="Custom Renderers\ListViewCustomRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HealthClinic\HealthClinic.csproj">
