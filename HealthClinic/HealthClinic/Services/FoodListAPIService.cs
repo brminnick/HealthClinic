@@ -10,6 +10,6 @@ namespace HealthClinic
             GetDataObjectFromAPI<List<FoodLogModel>>("https://mercuryhealth-dev.azurewebsites.net/api/FoodLogApi/");
 
         public static Task<HttpResponseMessage> PostFoodPhoto(byte[] foodPhoto) =>
-            PostObjectToAPI("https://abelmercuryhealthservice-dev.azurewebsites.net/ImageIDAPI/ImageIDAPI/UploadFoodImageByteArray/", foodPhoto);
+            PostObjectToAPI("https://abelmercuryhealthservice-dev.azurewebsites.net/ImageIDAPI/UploadFoodImage1", foodPhoto);
     }
 }
