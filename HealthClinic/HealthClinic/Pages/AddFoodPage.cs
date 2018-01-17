@@ -46,7 +46,7 @@ namespace HealthClinic
             };
             ToolbarItems.Add(_cancelToolbarItem);
 
-            var activityIndicator = new ActivityIndicator();
+            var activityIndicator = new ActivityIndicator { Color = ColorConstants.OffWhite };
             activityIndicator.SetBinding(IsVisibleProperty, nameof(ViewModel.IsPhotoUploading));
             activityIndicator.SetBinding(ActivityIndicator.IsRunningProperty, nameof(ViewModel.IsPhotoUploading));
 

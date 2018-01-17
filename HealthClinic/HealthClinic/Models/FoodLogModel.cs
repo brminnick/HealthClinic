@@ -4,8 +4,8 @@ namespace HealthClinic
 {
     public class FoodLogModel
     {
-        public string Description_PascalCase => StringService.ToPascalCase(Description);
-        public string MealTime_Formatted => StringService.ToMonthDayYear(MealTime);
+        public string Description_PascalCase => Description.ToPascalCase();
+        public string MealTime_Formatted => MealTime.ToMonthDayYear();
         public string Protein_Formatted => $"{ProteinInGrams}g";
         public string Fat_Formatted => $"{FatInGrams}g";
         public string Carbohydrates_Formatted => $"{CarbohydratesInGrams}g";

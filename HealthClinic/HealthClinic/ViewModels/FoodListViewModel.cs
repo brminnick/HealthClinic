@@ -39,8 +39,8 @@ namespace HealthClinic
 
             try
             {
-                var unsortedFoodList = await FoodListAPIService.GetFoodLogs();
-                FoodList = unsortedFoodList.OrderBy(x => x.MealTime).ToList();
+                var unsortedFoodList = await FoodListAPIService.GetFoodLogs().ConfigureAwait(false);
+                FoodList = unsortedFoodList.OrderBy(x => x.Description).ToList();
             }
             finally
             {

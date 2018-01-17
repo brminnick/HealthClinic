@@ -58,6 +58,7 @@ namespace HealthClinic
         protected override void UnsubscribeEventHandlers()
         {
             _addFoodButton.Clicked -= HandleAddFoodButtonClicked;
+            _foodListView.ItemSelected -= HandleItemSelected;
         }
 
         void HandleAddFoodButtonClicked(object sender, EventArgs e) =>
