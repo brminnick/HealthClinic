@@ -11,7 +11,7 @@ namespace HealthClinic
     public class AddFoodPage : BaseContentPage<AddFoodViewModel>
     {
         #region Constant Fields
-        readonly Button _takePhotoButton;
+        readonly HealthClinicButton _takePhotoButton;
         readonly CachedImage _photoImage;
         readonly ToolbarItem _uploadToolbarItem, _cancelToolbarItem;
         #endregion
@@ -19,7 +19,7 @@ namespace HealthClinic
         #region Constructors
         public AddFoodPage() : base(PageTitleConstants.AddFoodPage)
         {
-            _takePhotoButton = new Button
+            _takePhotoButton = new HealthClinicButton
             {
                 Text = "Take Photo",
             };

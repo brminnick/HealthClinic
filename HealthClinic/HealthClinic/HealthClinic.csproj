@@ -20,6 +20,7 @@
 		<Folder Include="Views\" />
 		<Folder Include="Views\FoodList\" />
 		<Folder Include="Models\" />
+		<Folder Include="Views\Base\" />
 	</ItemGroup>
 	<Import Project="..\HealthClinic.Shared\HealthClinic.Shared.projitems" Label="Shared" Condition="Exists('..\HealthClinic.Shared\HealthClinic.Shared.projitems')" />
 </Project>

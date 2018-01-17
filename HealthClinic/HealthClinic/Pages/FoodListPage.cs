@@ -25,7 +25,8 @@ namespace HealthClinic
             {
                 ItemTemplate = new DataTemplate(typeof(FoodViewCell)),
                 IsPullToRefreshEnabled = true,
-                AutomationId = AutomationIdConstants.FoodListPage_FoodList
+                AutomationId = AutomationIdConstants.FoodListPage_FoodList,
+                BackgroundColor = Color.Transparent
             };
             _foodListView.SetBinding(ListView.ItemsSourceProperty, nameof(ViewModel.FoodList));
             _foodListView.SetBinding(ListView.IsRefreshingProperty, nameof(ViewModel.IsRefreshing));
