@@ -1,6 +1,4 @@
 ﻿using Xamarin.UITest;
-using Xamarin.UITest.iOS;
-using Xamarin.UITest.Android;
 
 namespace HealthClinic.UITests
 {
@@ -10,8 +8,6 @@ namespace HealthClinic.UITests
         protected BasePage(IApp app, string pageTitle)
         {
             App = app;
-            OnAndroid = app is AndroidApp;
-            OniOS = app is iOSApp;
             PageTitle = pageTitle;
         }
         #endregion
@@ -19,8 +15,6 @@ namespace HealthClinic.UITests
         #region Properties
         public string PageTitle { get; }
         protected IApp App { get; }
-        protected bool OnAndroid { get; }
-        protected bool OniOS { get; }
         #endregion
 
         #region Methods

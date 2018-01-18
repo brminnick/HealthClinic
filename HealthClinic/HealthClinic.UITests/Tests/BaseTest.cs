@@ -8,12 +8,15 @@ namespace HealthClinic.UITests
     [TestFixture(Platform.iOS)]
     public abstract class BaseTest
     {
+        #region Constant Fields
+        Platform _platform;
+        #endregion
+
         #region Constructors
-        protected BaseTest(Platform platform) => Platform = platform;
+        protected BaseTest(Platform platform) => _platform = platform;
         #endregion
 
         #region Properties
-        protected Platform Platform { get; }
         protected IApp App { get; private set; }
         #endregion
 
@@ -21,7 +24,7 @@ namespace HealthClinic.UITests
         [SetUp]
         public virtual void TestSetup()
         {
-            App = AppInitializer.StartApp(Platform);
+            App = AppInitializer.StartApp(_platform);
 
             App.Screenshot("App Launched");
         }

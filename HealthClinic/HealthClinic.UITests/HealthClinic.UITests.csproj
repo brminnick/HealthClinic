@@ -52,6 +52,8 @@
     <Compile Include="ReplTests.cs" />
     <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Tests\BaseTest.cs" />
+    <Compile Include="Pages\FoodListPage.cs" />
+    <Compile Include="Pages\AddFoodPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -60,5 +62,6 @@
     <Folder Include="Pages\" />
     <Folder Include="Tests\" />
   </ItemGroup>
+  <Import Project="..\HealthClinic.Shared\HealthClinic.Shared.projitems" Label="Shared" Condition="Exists('..\HealthClinic.Shared\HealthClinic.Shared.projitems')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
