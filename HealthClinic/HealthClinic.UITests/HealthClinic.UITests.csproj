@@ -49,12 +49,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppInitializer.cs" />
-    <Compile Include="BasePage.cs" />
-    <Compile Include="BaseTest.cs" />
     <Compile Include="ReplTests.cs" />
+    <Compile Include="Pages\BasePage.cs" />
+    <Compile Include="Tests\BaseTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Pages\" />
+    <Folder Include="Tests\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
