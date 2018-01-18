@@ -49,11 +49,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppInitializer.cs" />
-    <Compile Include="ReplTests.cs" />
     <Compile Include="Pages\BasePage.cs" />
     <Compile Include="Tests\BaseTest.cs" />
     <Compile Include="Pages\FoodListPage.cs" />
     <Compile Include="Pages\AddFoodPage.cs" />
+    <Compile Include="Tests\ReplTests.cs" />
+    <Compile Include="Tests\FoodTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -18,6 +18,8 @@ namespace HealthClinic.UITests
 
         #region Properties
         protected IApp App { get; private set; }
+        protected FoodListPage FoodListPage { get; private set; }
+        protected AddFoodPage AddFoodPage { get; private set; }
         #endregion
 
         #region Methods
@@ -25,6 +27,9 @@ namespace HealthClinic.UITests
         public virtual void TestSetup()
         {
             App = AppInitializer.StartApp(_platform);
+
+            FoodListPage = new FoodListPage(App);
+            AddFoodPage = new AddFoodPage(App);
 
             App.Screenshot("App Launched");
         }
