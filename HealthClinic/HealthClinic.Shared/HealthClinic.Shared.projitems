@@ -15,9 +15,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\StreamExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\StringExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\FoodLogModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\AppCenterService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\Base\BaseHttpClientService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\FoodListAPIService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\IInternetStatusService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Constants\APIConstants.cs" />
   </ItemGroup>
 </Project>

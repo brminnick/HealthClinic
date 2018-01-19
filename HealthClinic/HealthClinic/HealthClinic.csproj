@@ -22,6 +22,7 @@
 		<Folder Include="Views\FoodList\" />
 		<Folder Include="Views\Base\" />
 		<Folder Include="Constants\" />
+		<Folder Include="Services\Base\" />
 	</ItemGroup>
 	<Import Project="..\HealthClinic.Shared\HealthClinic.Shared.projitems" Label="Shared" Condition="Exists('..\HealthClinic.Shared\HealthClinic.Shared.projitems')" />
 </Project>

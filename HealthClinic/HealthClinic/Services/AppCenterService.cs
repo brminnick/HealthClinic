@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 using Microsoft.AppCenter.Analytics;
 
-namespace HealthClinic.Shared
+namespace HealthClinic
 {
     public static class AppCenterService
     {

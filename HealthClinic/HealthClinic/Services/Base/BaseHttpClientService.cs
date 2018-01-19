@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 using Newtonsoft.Json;
 
-namespace HealthClinic.Shared
+using Xamarin.Forms;
+
+namespace HealthClinic
 {
     public abstract class BaseHttpClientService
     {
@@ -16,9 +18,11 @@ namespace HealthClinic.Shared
         static readonly Lazy<HttpClient> _clientHolder = new Lazy<HttpClient>(() => CreateHttpClient(TimeSpan.FromSeconds(10)));
         #endregion
 
-        #region Properties
-        public static IInternetStatusService InternetStatusService { get; set; }
+        #region Fields
+        static int _networkIndicatorCount = 0;
+        #endregion
 
+        #region Properties
         protected static HttpClient Client => _clientHolder.Value;
         static JsonSerializer Serializer => _serializerHolder.Value;
         #endregion
@@ -163,8 +167,19 @@ namespace HealthClinic.Shared
 
         static HttpClient CreateHttpClient(TimeSpan timeout) => new HttpClient { Timeout = timeout };
 
-        static void UpdateActivityIndicatorStatus(bool isActivityInidicatorRunning) =>
-            InternetStatusService?.UpdateInternetIndicatorStatus(isActivityInidicatorRunning);
+        static void UpdateActivityIndicatorStatus(bool isActivityInidicatorRunning)
+        {
+            if (isActivityInidicatorRunning)
+            {
+                Device.BeginInvokeOnMainThread(() => Application.Current.MainPage.IsBusy = true);
+                _networkIndicatorCount++;
+            }
+            else if (--_networkIndicatorCount <= 0)
+            {
+                Device.BeginInvokeOnMainThread(() => Application.Current.MainPage.IsBusy = false);
+                _networkIndicatorCount = 0;
+            }
+        }
         #endregion
     }
 }

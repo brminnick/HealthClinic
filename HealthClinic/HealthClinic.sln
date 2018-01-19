@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthClinic", "HealthClinic\HealthClinic.csproj", "{E54F14B6-B440-45B1-8E1B-3352DDDFE40C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthClinic", "HealthClinic\HealthClinic.csproj", "{E54F14B6-B440-45B1-8E1B-3352DDDFE40C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthClinic.Droid", "HealthClinic.Droid\HealthClinic.Droid.csproj", "{B543435F-636E-47C5-94C2-DDCDEB617233}"
 EndProject

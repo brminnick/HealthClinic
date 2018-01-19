@@ -13,30 +13,25 @@ namespace HealthClinic.UITests
 {
     public class FoodTests : BaseTest
     {
-        const string _testFoodDescription = "PIZZA";
-
         public FoodTests(Platform platform) : base(platform)
         {
         }
 
         public override void TestSetup()
         {
-            var addTestFoodTask = AddTestFoodToBackend();
-
             base.TestSetup();
 
             FoodListPage.WaitForPageToLoad();
 
-            Task.Run(async () => await AddTestFoodToBackend()).GetAwaiter().GetResult();
+            BackdoorMethodServices.PostTestImageToAPI(App);
         }
 
         public override void TestTearDown()
         {
             base.TestTearDown();
 
-            Task.Run(async () => await DeleteTestFromFromBackend()).GetAwaiter().GetResult();
+            BackdoorMethodServices.DeleteTestFoodFromAPI(App);
         }
-
 
 
         [Test]
@@ -49,26 +44,6 @@ namespace HealthClinic.UITests
 
             //Assert
             AddFoodPage.WaitForPageToLoad();
-        }
-
-        async Task DeleteTestFromFromBackend()
-        {
-            var allFoodItems = await FoodListAPIService.GetFoodLogs().ConfigureAwait(false);
-            var pizzaFoodItemList = allFoodItems?.Where(x => x.Description.ToUpper().Equals(_testFoodDescription.ToUpper())).ToList() ?? new List<FoodLogModel>();
-
-            var deletePizzaTaskList = new List<Task>();
-            foreach (var pizzaFoodItem in pizzaFoodItemList)
-                deletePizzaTaskList.Add(FoodListAPIService.DeleteFood(pizzaFoodItem.Id));
-
-            await Task.WhenAll(deletePizzaTaskList);
-        }
-
-        Task AddTestFoodToBackend() => FoodListAPIService.PostFoodPhoto(GetTestImage());
-
-        byte[] GetTestImage()
-        {
-            var file = File.OpenRead("pizza.png");
-            return StreamExtensions.ConvertStreamToByteArrary(file);
         }
     }
 }

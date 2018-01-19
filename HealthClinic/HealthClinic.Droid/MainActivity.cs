@@ -1,8 +1,12 @@
-﻿using Android.OS;
+﻿using System.Threading.Tasks;
+
+using Android.OS;
 using Android.App;
 using Android.Content.PM;
 
 using Plugin.Permissions;
+
+using Java.Interop;
 
 namespace HealthClinic.Droid
 {
@@ -15,6 +19,19 @@ namespace HealthClinic.Droid
 
             PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+
+        #region BackdoorMethods
+#if DEBUG
+        [Export("PostTestImageToAPI")]
+        public void PostTestImageToAPI() =>
+            Task.Run(async () => await UITestBackdoorMethodServices.PostTestImageToAPI()).GetAwaiter().GetResult();
+
+        [Export("DeleteTestFoodFromAPI")]
+        public void DeleteTestFoodFromAPI() =>
+            Task.Run(async () => await UITestBackdoorMethodServices.DeleteTestFoodFromAPI()).GetAwaiter().GetResult();
+#endif
+
+        #endregion
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
