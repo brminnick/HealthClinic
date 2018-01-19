@@ -1,4 +1,4 @@
-﻿namespace HealthClinic
+﻿namespace HealthClinic.Common
 {
     public static class AppCenterConstants
     {
@@ -8,6 +8,7 @@
         public const string AddFoodListPageAppeared = "Add Food List Page Appeared";
         public const string AddFoodListPageButtonTapped = "Add Food List Page Button Tapped";
         public const string CancelButtonTapped = "Cancel Button Tapped";
+        public const string DeleteFoodAPITriggered = "Delete Food API Triggered";
         public const string Description = "Description";
         public const string Error = "Error";
         public const string GetFoodLogsFromAPITriggered = "Get Food Logs From API Triggered";

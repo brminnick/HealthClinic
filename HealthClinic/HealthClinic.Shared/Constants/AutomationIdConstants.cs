@@ -1,4 +1,4 @@
-﻿namespace HealthClinic.Shared
+﻿namespace HealthClinic.Common
 {
     public static class AutomationIdConstants
     {

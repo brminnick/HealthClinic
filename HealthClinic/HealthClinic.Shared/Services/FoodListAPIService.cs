@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
-namespace HealthClinic
+namespace HealthClinic.Common
 {
-    abstract class FoodListAPIService : BaseHttpClientService
+    public abstract class FoodListAPIService : BaseHttpClientService
     {
         public static Task<List<FoodLogModel>> GetFoodLogs()
         {
@@ -16,6 +16,12 @@ namespace HealthClinic
         {
             AppCenterService.TrackEvent(AppCenterConstants.UploadPhotoToAPITriggered);
             return PostObjectToAPI("https://abelmercuryhealthservice-dev.azurewebsites.net/ImageIDAPI/UploadFoodImage1", foodPhoto);
+        }
+
+        public static Task<HttpResponseMessage> DeleteFood(string id)
+        {
+            AppCenterService.TrackEvent(AppCenterConstants.DeleteFoodAPITriggered);
+            return GetResponseMessageFromAPI($"http://abelmercuryhealthservice-dev.azurewebsites.net/FoodApi/DeleteFoodItem?id={id}");
         }
     }
 }
