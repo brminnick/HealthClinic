@@ -1,20 +1,52 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-namespace HealthClinic.Shared
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Crashes;
+using Microsoft.AppCenter.Analytics;
+
+namespace HealthClinic
 {
-    public static class DebugHelpers
+    public static class AppCenterService
     {
         #region Enums
         enum _pathType { Windows, Linux };
         #endregion
 
         #region Methods
+        public static void Start()
+        {
+            switch (Xamarin.Forms.Device.RuntimePlatform)
+            {
+                case Xamarin.Forms.Device.iOS:
+                    Start(AppCenterConstants.AppCenterAPIKey_iOS);
+                    break;
+                case Xamarin.Forms.Device.Android:
+                    Start(AppCenterConstants.AppCenterAPIKey_Droid);
+                    break;
+                default:
+                    throw new PlatformNotSupportedException();
+            }
+        }
+
+        public static void TrackEvent(string trackIdentifier, IDictionary<string, string> table = null) =>
+            Analytics.TrackEvent(trackIdentifier, table);
+
+        public static void TrackEvent(string trackIdentifier, string key, string value)
+        {
+            IDictionary<string, string> table = new Dictionary<string, string> { { key, value } };
+
+            if (string.IsNullOrWhiteSpace(key) && string.IsNullOrWhiteSpace(value))
+                table = null;
+
+            TrackEvent(trackIdentifier, table);
+        }
+
+
         [Conditional("DEBUG")]
-        public static void PrintException(
-            Exception exception,
+        public static void LogException(Exception exception,
             [CallerMemberName] string callerMemberName = "",
             [CallerLineNumber] int lineNumber = 0,
             [CallerFilePath] string filePath = "")
@@ -57,6 +89,8 @@ namespace HealthClinic.Shared
 
             return fileName;
         }
+
+        static void Start(string appSecret) => AppCenter.Start(appSecret, typeof(Analytics), typeof(Crashes));
         #endregion
     }
 }

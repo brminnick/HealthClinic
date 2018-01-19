@@ -57,7 +57,7 @@ namespace HealthClinic
             }
             catch (Exception e)
             {
-                DebugHelpers.PrintException(e);
+                AppCenterService.LogException(e);
                 return default;
             }
             finally
@@ -79,7 +79,7 @@ namespace HealthClinic
             }
             catch (Exception e)
             {
-                DebugHelpers.PrintException(e);
+                AppCenterService.LogException(e);
                 return null;
             }
             finally
@@ -109,7 +109,7 @@ namespace HealthClinic
             }
             catch (Exception e)
             {
-                DebugHelpers.PrintException(e);
+                AppCenterService.LogException(e);
                 return null;
             }
             finally
@@ -130,7 +130,7 @@ namespace HealthClinic
             }
             catch (Exception e)
             {
-                DebugHelpers.PrintException(e);
+                AppCenterService.LogException(e);
                 return null;
             }
             finally

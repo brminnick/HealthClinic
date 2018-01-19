@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using Xamarin.Forms;
 
@@ -71,6 +72,13 @@ namespace HealthClinic
         #endregion
 
         #region Methods
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            AppCenterService.TrackEvent(AppCenterConstants.AddFoodListPageAppeared);
+        }
+
         protected override void SubscribeEventHandlers()
         {
             MediaService.NoCameraFound += HandleNoCameraFound;
@@ -89,12 +97,16 @@ namespace HealthClinic
 
         void HandleCancelToolbarItemClicked(object sender, EventArgs e)
         {
+            AppCenterService.TrackEvent(AppCenterConstants.CancelButtonTapped);
+
             if (!ViewModel.IsPhotoUploading)
                 ClosePage();
         }
 
         void HandleUploadPhotoCompleted(object sender, EventArgs e)
         {
+            AppCenterService.TrackEvent(AppCenterConstants.UploadPhotoToSucceeded);
+
             Device.BeginInvokeOnMainThread(async () =>
             {
                 await DisplayAlert("Photo Saved", string.Empty, "OK");
@@ -102,9 +114,20 @@ namespace HealthClinic
             });
         }
 
-        void HandleUploadPhotoFailed(object sender, string errorMessage) => DisplayErrorMessage(errorMessage);
+        void HandleUploadPhotoFailed(object sender, string errorMessage)
+        {
+            AppCenterService.TrackEvent(AppCenterConstants.UploadPhotoFailed,
+                                        new Dictionary<string, string> { { AppCenterConstants.Error, errorMessage } });
 
-        void HandleNoCameraFound(object sender, EventArgs e) => DisplayErrorMessage("No Camera Found");
+            DisplayErrorMessage(errorMessage);
+        }
+
+        void HandleNoCameraFound(object sender, EventArgs e)
+        {
+            AppCenterService.TrackEvent(AppCenterConstants.NoCameraFound);
+
+            DisplayErrorMessage("No Camera Found");
+        }
 
         void DisplayErrorMessage(string message) =>
             Device.BeginInvokeOnMainThread(async () => await DisplayAlert("Error", message, "Ok"));

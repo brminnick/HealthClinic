@@ -10,10 +10,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Constants\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Helpers\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Helpers\DebugHelpers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constants\PageTitleConstants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constants\AutomationIdConstants.cs" />
   </ItemGroup>

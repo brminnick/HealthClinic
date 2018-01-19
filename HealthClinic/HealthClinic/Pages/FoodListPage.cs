@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using Xamarin.Forms;
 
@@ -45,6 +46,8 @@ namespace HealthClinic
         {
             base.OnAppearing();
 
+            AppCenterService.TrackEvent(AppCenterConstants.FoodListPageAppeared);
+
             Device.BeginInvokeOnMainThread(_foodListView.BeginRefresh);
         }
 
@@ -61,10 +64,21 @@ namespace HealthClinic
             _foodListView.ItemSelected -= HandleItemSelected;
         }
 
-        void HandleAddFoodButtonClicked(object sender, EventArgs e) =>
+        void HandleAddFoodButtonClicked(object sender, EventArgs e)
+        {
+            AppCenterService.TrackEvent(AppCenterConstants.AddFoodListPageButtonTapped);
             Device.BeginInvokeOnMainThread(async () => await Navigation.PushModalAsync(new HealthClinicNavigationPage(new AddFoodPage())));
+        }
 
-        void HandleItemSelected(object sender, SelectedItemChangedEventArgs e) => _foodListView.SelectedItem = null;
+        void HandleItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            var itemTapped = e.SelectedItem as FoodLogModel;
+
+            AppCenterService.TrackEvent(AppCenterConstants.FoodListItemTapped,
+                                        new Dictionary<string, string> { { AppCenterConstants.Description, itemTapped?.Description_PascalCase } });
+            
+            _foodListView.SelectedItem = null;
+        }
         #endregion
     }
 }
