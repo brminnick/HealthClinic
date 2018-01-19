@@ -51,7 +51,9 @@ namespace HealthClinic
             if (mediaFile == null)
                 return;
 
-            _photoBlob = mediaFile.GetStream().ConvertStreamToByteArrary();
+            var photoBlobStream = mediaFile.GetStream();
+            _photoBlob = StreamExtensions.ConvertStreamToByteArrary(photoBlobStream);
+
             PhotoImageSource = ImageSource.FromStream(() => new MemoryStream(_photoBlob));
         }
 

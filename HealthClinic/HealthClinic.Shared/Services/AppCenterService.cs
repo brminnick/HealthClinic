@@ -3,8 +3,6 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-using Microsoft.AppCenter;
-using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Analytics;
 
 namespace HealthClinic.Shared
@@ -16,21 +14,6 @@ namespace HealthClinic.Shared
         #endregion
 
         #region Methods
-        public static void Start()
-        {
-            switch (Xamarin.Forms.Device.RuntimePlatform)
-            {
-                case Xamarin.Forms.Device.iOS:
-                    Start(AppCenterConstants.AppCenterAPIKey_iOS);
-                    break;
-                case Xamarin.Forms.Device.Android:
-                    Start(AppCenterConstants.AppCenterAPIKey_Droid);
-                    break;
-                default:
-                    throw new PlatformNotSupportedException();
-            }
-        }
-
         public static void TrackEvent(string trackIdentifier, IDictionary<string, string> table = null) =>
             Analytics.TrackEvent(trackIdentifier, table);
 
@@ -89,8 +72,6 @@ namespace HealthClinic.Shared
 
             return fileName;
         }
-
-        static void Start(string appSecret) => AppCenter.Start(appSecret, typeof(Analytics), typeof(Crashes));
         #endregion
     }
 }

@@ -18,7 +18,7 @@ namespace HealthClinic.Shared
             return PostObjectToAPI("https://abelmercuryhealthservice-dev.azurewebsites.net/ImageIDAPI/UploadFoodImage1", foodPhoto);
         }
 
-        public static Task<HttpResponseMessage> DeleteFood(string id)
+        public static Task<HttpResponseMessage> DeleteFood(int id)
         {
             AppCenterService.TrackEvent(AppCenterConstants.DeleteFoodAPITriggered);
             return GetResponseMessageFromAPI($"http://abelmercuryhealthservice-dev.azurewebsites.net/FoodApi/DeleteFoodItem?id={id}");

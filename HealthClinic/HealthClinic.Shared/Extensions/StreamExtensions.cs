@@ -4,7 +4,7 @@ namespace HealthClinic.Shared
 {
     public static class StreamExtensions
     {
-        public static byte[] ConvertStreamToByteArrary(this Stream stream)
+        public static byte[] ConvertStreamToByteArrary(Stream stream)
         {
             using (var memoryStream = new MemoryStream())
             {

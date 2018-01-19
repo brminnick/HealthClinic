@@ -1,5 +1,7 @@
-﻿using System.Reflection;
+﻿using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 using NUnit.Framework;
 
@@ -11,7 +13,7 @@ namespace HealthClinic.UITests
 {
     public class FoodTests : BaseTest
     {
-        const string _testFoodDescription = "pizza";
+        const string _testFoodDescription = "PIZZA";
 
         public FoodTests(Platform platform) : base(platform)
         {
@@ -19,23 +21,23 @@ namespace HealthClinic.UITests
 
         public override void TestSetup()
         {
-            var addTestFoodTask = AddTestFood();
+            var addTestFoodTask = AddTestFoodToBackend();
 
             base.TestSetup();
 
             FoodListPage.WaitForPageToLoad();
+
+            Task.Run(async () => await AddTestFoodToBackend()).GetAwaiter().GetResult();
         }
 
         public override void TestTearDown()
         {
             base.TestTearDown();
+
+            Task.Run(async () => await DeleteTestFromFromBackend()).GetAwaiter().GetResult();
         }
 
-        [Test]
-        public void LaunchTest()
-        {
 
-        }
 
         [Test]
         public void AddFoodPageTest()
@@ -49,12 +51,24 @@ namespace HealthClinic.UITests
             AddFoodPage.WaitForPageToLoad();
         }
 
-        async Task AddTestFood()
+        async Task DeleteTestFromFromBackend()
         {
-            await FoodListAPIService.PostFoodPhoto(GetTestImage());
+            var allFoodItems = await FoodListAPIService.GetFoodLogs().ConfigureAwait(false);
+            var pizzaFoodItemList = allFoodItems?.Where(x => x.Description.ToUpper().Equals(_testFoodDescription.ToUpper())).ToList() ?? new List<FoodLogModel>();
+
+            var deletePizzaTaskList = new List<Task>();
+            foreach (var pizzaFoodItem in pizzaFoodItemList)
+                deletePizzaTaskList.Add(FoodListAPIService.DeleteFood(pizzaFoodItem.Id));
+
+            await Task.WhenAll(deletePizzaTaskList);
         }
 
-        byte[] GetTestImage() =>
-            Assembly.GetExecutingAssembly().GetManifestResourceStream("pizza.png").ConvertToByteArray();
+        Task AddTestFoodToBackend() => FoodListAPIService.PostFoodPhoto(GetTestImage());
+
+        byte[] GetTestImage()
+        {
+            var file = File.OpenRead("pizza.png");
+            return StreamExtensions.ConvertStreamToByteArrary(file);
+        }
     }
 }

@@ -4,13 +4,8 @@ using System.Net;
 using System.Text;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Net.Http.Headers;
 
 using Newtonsoft.Json;
-
-using Xamarin.Forms;
-
-using HealthClinic.Shared;
 
 namespace HealthClinic.Shared
 {
@@ -21,11 +16,9 @@ namespace HealthClinic.Shared
         static readonly Lazy<HttpClient> _clientHolder = new Lazy<HttpClient>(() => CreateHttpClient(TimeSpan.FromSeconds(10)));
         #endregion
 
-        #region Fields
-        static int _networkIndicatorCount = 0;
-        #endregion
-
         #region Properties
+        public static IInternetStatusService InternetStatusService { get; set; }
+
         protected static HttpClient Client => _clientHolder.Value;
         static JsonSerializer Serializer => _serializerHolder.Value;
         #endregion
@@ -168,40 +161,10 @@ namespace HealthClinic.Shared
             }
         }
 
-        protected static void UpdateActivityIndicatorStatus(bool isActivityIndicatorDisplayed)
-        {
-            if (isActivityIndicatorDisplayed)
-            {
-                Device.BeginInvokeOnMainThread(() => Application.Current.MainPage.IsBusy = true);
-                _networkIndicatorCount++;
-            }
-            else if (--_networkIndicatorCount <= 0)
-            {
-                Device.BeginInvokeOnMainThread(() => Application.Current.MainPage.IsBusy = false);
-                _networkIndicatorCount = 0;
-            }
-        }
+        static HttpClient CreateHttpClient(TimeSpan timeout) => new HttpClient { Timeout = timeout };
 
-        static HttpClient CreateHttpClient(TimeSpan timeout)
-        {
-            HttpClient client;
-
-            switch (Device.RuntimePlatform)
-            {
-                case Device.iOS:
-                case Device.Android:
-                    client = new HttpClient();
-                    break;
-                default:
-                    client = new HttpClient(new HttpClientHandler { AutomaticDecompression = DecompressionMethods.GZip });
-                    break;
-
-            }
-            client.Timeout = timeout;
-            client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
-
-            return client;
-        }
+        static void UpdateActivityIndicatorStatus(bool isActivityInidicatorRunning) =>
+            InternetStatusService?.UpdateInternetIndicatorStatus(isActivityInidicatorRunning);
         #endregion
     }
 }

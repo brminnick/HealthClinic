@@ -18,5 +18,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\AppCenterService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\Base\BaseHttpClientService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\FoodListAPIService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\IInternetStatusService.cs" />
   </ItemGroup>
 </Project>
