@@ -48,6 +48,20 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HealthClinic.iOS\HealthClinic.iOS.csproj">
+      <Project>{23A12335-B2FA-4450-A648-E55B31513253}</Project>
+      <Name>HealthClinic.iOS</Name>
+      <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\HealthClinic.Droid\HealthClinic.Droid.csproj">
+      <Project>{B543435F-636E-47C5-94C2-DDCDEB617233}</Project>
+      <Name>HealthClinic.Droid</Name>
+      <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="..\HealthClinic.Shared\HealthClinic.Shared.projitems" Label="Shared" Condition="Exists('..\HealthClinic.Shared\HealthClinic.Shared.projitems')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
