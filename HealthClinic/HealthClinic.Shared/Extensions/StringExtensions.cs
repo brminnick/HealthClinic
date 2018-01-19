@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace HealthClinic.Common
+namespace HealthClinic.Shared
 {
     public static class StringExtensions
     {

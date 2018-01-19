@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>{4E867981-6DFD-4931-83FD-A7228C8F53A8}</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>HealthClinic.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\StreamExtensions.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\StringExtensions.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="$(MSBuildThisFileDirectory)Constants\AppCenterConstants.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="$(MSBuildThisFileDirectory)Constants\AutomationIdConstants.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="$(MSBuildThisFileDirectory)Constants\PageTitleConstants.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\FoodLogModel.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\AppCenterService.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Base\BaseHttpClientService.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\FoodListAPIService.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Constants\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Extensions\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Models\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Services\" />
+  </ItemGroup>
+</Project>

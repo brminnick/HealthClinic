@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 
+using HealthClinic.Shared;
+
 namespace HealthClinic
 {
     public class AddFoodViewModel : BaseViewModel
@@ -49,7 +51,7 @@ namespace HealthClinic
             if (mediaFile == null)
                 return;
 
-            _photoBlob = ConvertStreamToByteArrary(mediaFile.GetStream());
+            _photoBlob = mediaFile.GetStream().ConvertStreamToByteArrary();
             PhotoImageSource = ImageSource.FromStream(() => new MemoryStream(_photoBlob));
         }
 
@@ -92,15 +94,6 @@ namespace HealthClinic
             finally
             {
                 IsPhotoUploading = false;
-            }
-        }
-
-        byte[] ConvertStreamToByteArrary(Stream stream)
-        {
-            using (var memoryStream = new MemoryStream())
-            {
-                stream.CopyTo(memoryStream);
-                return memoryStream.ToArray();
             }
         }
 

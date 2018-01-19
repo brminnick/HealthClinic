@@ -7,7 +7,7 @@ using Microsoft.AppCenter;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Analytics;
 
-namespace HealthClinic.Common
+namespace HealthClinic.Shared
 {
     public static class AppCenterService
     {

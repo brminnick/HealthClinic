@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace HealthClinic.Common
+namespace HealthClinic.Shared
 {
     public static class StreamExtensions
     {

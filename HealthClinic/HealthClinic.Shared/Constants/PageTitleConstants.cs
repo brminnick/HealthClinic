@@ -1,4 +1,4 @@
-﻿namespace HealthClinic.Common
+﻿namespace HealthClinic.Shared
 {
     public static class PageTitleConstants
     {

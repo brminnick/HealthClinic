@@ -10,9 +10,9 @@ using Newtonsoft.Json;
 
 using Xamarin.Forms;
 
-using HealthClinic.Common;
+using HealthClinic.Shared;
 
-namespace HealthClinic
+namespace HealthClinic.Shared
 {
     public abstract class BaseHttpClientService
     {

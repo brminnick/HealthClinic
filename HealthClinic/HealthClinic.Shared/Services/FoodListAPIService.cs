@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
-namespace HealthClinic.Common
+namespace HealthClinic.Shared
 {
     public abstract class FoodListAPIService : BaseHttpClientService
     {

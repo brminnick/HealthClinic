@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthClinic", "HealthClinic\HealthClinic.csproj", "{E54F14B6-B440-45B1-8E1B-3352DDDFE40C}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "HealthClinic.Shared", "HealthClinic.Shared\HealthClinic.Shared.shproj", "{6E25C08F-76F2-4A5A-9991-0232ABE338CD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthClinic.Droid", "HealthClinic.Droid\HealthClinic.Droid.csproj", "{B543435F-636E-47C5-94C2-DDCDEB617233}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthClinic.iOS", "HealthClinic.iOS\HealthClinic.iOS.csproj", "{23A12335-B2FA-4450-A648-E55B31513253}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "HealthClinic.Shared", "HealthClinic.Shared\HealthClinic.Shared.shproj", "{4E867981-6DFD-4931-83FD-A7228C8F53A8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthClinic.UITests", "HealthClinic.UITests\HealthClinic.UITests.csproj", "{D51D1F8C-4063-437B-8DF7-8F43562F83B5}"
 EndProject

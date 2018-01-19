@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HealthClinic.Common
+namespace HealthClinic.Shared
 {
     public class FoodLogModel
     {
