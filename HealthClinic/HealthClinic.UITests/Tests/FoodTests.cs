@@ -7,8 +7,6 @@ using NUnit.Framework;
 
 using Xamarin.UITest;
 
-using HealthClinic.Shared;
-
 namespace HealthClinic.UITests
 {
     public class FoodTests : BaseTest
@@ -30,7 +28,7 @@ namespace HealthClinic.UITests
         {
             base.TestTearDown();
 
-            BackdoorMethodServices.DeleteTestFoodFromAPI(App);
+			BackdoorMethodServices.DeleteTestFoodFromAPI(App);
         }
 
 
