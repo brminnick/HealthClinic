@@ -8,5 +8,6 @@
         public const string AddFoodPage_CancelButton = nameof(AddFoodPage_CancelButton);
         public const string AddFoodPage_UploadButton = nameof(AddFoodPage_UploadButton);
         public const string AddFoodPage_TakePhotoButton = nameof(AddFoodPage_TakePhotoButton);
+        public const string AddFoodPage_ActivityIndicator = nameof(AddFoodPage_ActivityIndicator);
     }
 }

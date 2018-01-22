@@ -9,7 +9,7 @@ namespace HealthClinic.UITests
     public class AddFoodPage : BasePage
     {
         #region Constant Fields
-        readonly Query _uploadButton, _cancelButton, _takePhotoButton;
+        readonly Query _uploadButton, _cancelButton, _takePhotoButton, _activityIndicator;
         #endregion
 
         #region Constructors
@@ -18,6 +18,7 @@ namespace HealthClinic.UITests
             _uploadButton = x => x.Marked(AutomationIdConstants.AddFoodPage_UploadButton);
             _cancelButton = x => x.Marked(AutomationIdConstants.AddFoodPage_CancelButton);
             _takePhotoButton = x => x.Marked(AutomationIdConstants.AddFoodPage_TakePhotoButton);
+            _activityIndicator = x => x.Marked(AutomationIdConstants.AddFoodPage_ActivityIndicator);
         }
         #endregion
 
@@ -38,6 +39,24 @@ namespace HealthClinic.UITests
         {
             App.Tap(_takePhotoButton);
             App.Screenshot("Take Photo Button Tapped");
+        }
+
+        public void TapOkDialog()
+        {
+            App.Tap("OK");
+            App.Screenshot("Tapped Ok");
+        }
+
+        public void WaitForActivityIndicator()
+        {
+            App.WaitForElement(_activityIndicator);
+            App.Screenshot("Waited For Activity Indicator");
+        }
+
+        public void WaitForNoActivityIndicator()
+        {
+            App.WaitForNoElement(_activityIndicator, timeout: HttpConstants.HttpTimeOut);
+            App.Screenshot("Waited For No Activity Indicator");
         }
         #endregion
     }

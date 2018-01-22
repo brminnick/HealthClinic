@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Globalization;
 
-namespace HealthClinic
+namespace HealthClinic.Shared
 {
-	public static class StringExtensions
+    public static class StringExtensions
     {
         public static string ToPascalCase(this string input)
         {
@@ -12,13 +11,9 @@ namespace HealthClinic
             foreach (char c in input)
             {
                 if (!Char.IsLetterOrDigit(c))
-                {
                     resultBuilder.Append(" ");
-                }
                 else
-                {
                     resultBuilder.Append(c);
-                }
             }
 
             string result = resultBuilder.ToString();
@@ -29,12 +24,7 @@ namespace HealthClinic
             return textInfo.ToTitleCase(result).Replace(" ", String.Empty);
         }
 
-        public static string ToMonthDayYear(this DateTime input)
-        {
-            var formattedString = $"{input.ToString("MMM")} {input.Day}, '{input.ToString("yy")}";
-            Debug.WriteLine(formattedString);
-
-            return formattedString;
-        }
+        public static string ToMonthDayYear(this DateTime input) => 
+            $"{input.ToString("MMM")} {input.Day}, '{input.ToString("yy")}";
     }
 }

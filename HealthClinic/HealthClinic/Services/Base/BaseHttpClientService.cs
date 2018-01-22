@@ -4,11 +4,11 @@ using System.Net;
 using System.Text;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Net.Http.Headers;
 
 using Newtonsoft.Json;
 
 using Xamarin.Forms;
+
 using HealthClinic.Shared;
 
 namespace HealthClinic
@@ -17,7 +17,7 @@ namespace HealthClinic
     {
         #region Constant Fields
         static readonly Lazy<JsonSerializer> _serializerHolder = new Lazy<JsonSerializer>();
-        static readonly Lazy<HttpClient> _clientHolder = new Lazy<HttpClient>(() => CreateHttpClient(TimeSpan.FromSeconds(10)));
+        static readonly Lazy<HttpClient> _clientHolder = new Lazy<HttpClient>(() => CreateHttpClient(HttpConstants.HttpTimeOut));
         #endregion
 
         #region Fields
@@ -30,6 +30,34 @@ namespace HealthClinic
         #endregion
 
         #region Methods
+        protected static Task<HttpResponseMessage> GetResponseMessageFromAPI(string apiUrl) => GetResponseMessageFromAPI<object>(apiUrl);
+
+        protected static async Task<HttpResponseMessage> GetResponseMessageFromAPI<TPayloadData>(string apiUrl, TPayloadData data = default)
+        {
+            var stringPayload = string.Empty;
+
+            if (data?.Equals(default) == true)
+                stringPayload = await Task.Run(() => JsonConvert.SerializeObject(data)).ConfigureAwait(false);
+
+            var httpContent = new StringContent(stringPayload, Encoding.UTF8, "application/json");
+
+            try
+            {
+                UpdateActivityIndicatorStatus(true);
+
+                return await Client.GetAsync(apiUrl);
+            }
+            catch (Exception e)
+            {
+                AppCenterService.LogException(e);
+                return default;
+            }
+            finally
+            {
+                UpdateActivityIndicatorStatus(false);
+            }
+        }
+
         protected static Task<T> GetDataObjectFromAPI<T>(string apiUrl) => GetDataObjectFromAPI<T, object>(apiUrl);
 
         protected static async Task<TDataObject> GetDataObjectFromAPI<TDataObject, TPayloadData>(string apiUrl, TPayloadData data = default)
@@ -139,9 +167,11 @@ namespace HealthClinic
             }
         }
 
-        protected static void UpdateActivityIndicatorStatus(bool isActivityIndicatorDisplayed)
+        static HttpClient CreateHttpClient(TimeSpan timeout) => new HttpClient { Timeout = timeout };
+
+        static void UpdateActivityIndicatorStatus(bool isActivityInidicatorRunning)
         {
-            if (isActivityIndicatorDisplayed)
+            if (isActivityInidicatorRunning)
             {
                 Device.BeginInvokeOnMainThread(() => Application.Current.MainPage.IsBusy = true);
                 _networkIndicatorCount++;
@@ -151,27 +181,6 @@ namespace HealthClinic
                 Device.BeginInvokeOnMainThread(() => Application.Current.MainPage.IsBusy = false);
                 _networkIndicatorCount = 0;
             }
-        }
-
-        static HttpClient CreateHttpClient(TimeSpan timeout)
-        {
-            HttpClient client;
-
-            switch (Device.RuntimePlatform)
-            {
-                case Device.iOS:
-                case Device.Android:
-                    client = new HttpClient();
-                    break;
-                default:
-                    client = new HttpClient(new HttpClientHandler { AutomaticDecompression = DecompressionMethods.GZip });
-                    break;
-
-            }
-            client.Timeout = timeout;
-            //client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
-
-            return client;
         }
         #endregion
     }

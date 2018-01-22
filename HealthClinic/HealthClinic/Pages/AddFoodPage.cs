@@ -47,7 +47,11 @@ namespace HealthClinic
             };
             ToolbarItems.Add(_cancelToolbarItem);
 
-            var activityIndicator = new ActivityIndicator { Color = ColorConstants.OffWhite };
+            var activityIndicator = new ActivityIndicator
+            {
+                Color = ColorConstants.OffWhite,
+                AutomationId = AutomationIdConstants.AddFoodPage_ActivityIndicator
+            };
             activityIndicator.SetBinding(IsVisibleProperty, nameof(ViewModel.IsPhotoUploading));
             activityIndicator.SetBinding(ActivityIndicator.IsRunningProperty, nameof(ViewModel.IsPhotoUploading));
 
@@ -130,7 +134,7 @@ namespace HealthClinic
         }
 
         void DisplayErrorMessage(string message) =>
-            Device.BeginInvokeOnMainThread(async () => await DisplayAlert("Error", message, "Ok"));
+            Device.BeginInvokeOnMainThread(async () => await DisplayAlert("Error", message, "OK"));
 
         void ClosePage() => Device.BeginInvokeOnMainThread(async () => await Navigation.PopModalAsync());
         #endregion

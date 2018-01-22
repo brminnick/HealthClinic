@@ -9,7 +9,7 @@ namespace HealthClinic.UITests
     public abstract class BaseTest
     {
         #region Constant Fields
-        Platform _platform;
+        readonly Platform _platform;
         #endregion
 
         #region Constructors
@@ -32,6 +32,13 @@ namespace HealthClinic.UITests
             AddFoodPage = new AddFoodPage(App);
 
             App.Screenshot("App Launched");
+
+            BackdoorMethodServices.DeleteTestFoodFromAPI(App);
+        }
+
+        [TearDown]
+        public virtual void TestTearDown()
+        {
         }
         #endregion
     }

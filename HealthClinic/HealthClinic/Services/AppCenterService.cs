@@ -3,9 +3,10 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-using Microsoft.AppCenter;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Analytics;
+
+using HealthClinic.Shared;
 
 namespace HealthClinic
 {
@@ -20,14 +21,13 @@ namespace HealthClinic
         {
             switch (Xamarin.Forms.Device.RuntimePlatform)
             {
-                case Xamarin.Forms.Device.iOS:
-                    Start(AppCenterConstants.AppCenterAPIKey_iOS);
-                    break;
                 case Xamarin.Forms.Device.Android:
                     Start(AppCenterConstants.AppCenterAPIKey_Droid);
                     break;
-                default:
-                    throw new PlatformNotSupportedException();
+
+                case Xamarin.Forms.Device.iOS:
+                    Start(AppCenterConstants.AppCenterAPIKey_iOS);
+                    break;
             }
         }
 
@@ -90,7 +90,7 @@ namespace HealthClinic
             return fileName;
         }
 
-        static void Start(string appSecret) => AppCenter.Start(appSecret, typeof(Analytics), typeof(Crashes));
+        static void Start(string apiKey) => Microsoft.AppCenter.AppCenter.Start(apiKey, typeof(Analytics), typeof(Crashes));
         #endregion
     }
 }

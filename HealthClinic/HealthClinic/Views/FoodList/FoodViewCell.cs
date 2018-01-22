@@ -1,5 +1,7 @@
 ﻿using Xamarin.Forms;
 
+using HealthClinic.Shared;
+
 namespace HealthClinic
 {
     public class FoodViewCell : ViewCell

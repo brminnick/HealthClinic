@@ -1,4 +1,6 @@
-﻿using UIKit;
+﻿using System.Threading.Tasks;
+
+using UIKit;
 using Foundation;
 
 namespace HealthClinic.iOS
@@ -19,5 +21,21 @@ namespace HealthClinic.iOS
 
             return base.FinishedLaunching(uiApplication, launchOptions);
         }
+
+        #region BackdoorMethods
+#if DEBUG
+        [Export("postTestImageToAPI:")]
+        public void PostTestImageToAPI(NSString unusedString) =>
+            Task.Run(async () => await UITestBackdoorMethodServices.PostTestImageToAPI()).GetAwaiter().GetResult();
+
+        [Export("deleteTestFoodFromAPI:")]
+        public void DeleteTestFoodFromAPI(NSString unusedString) =>
+            Task.Run(async () => await UITestBackdoorMethodServices.DeleteTestFoodFromAPI()).GetAwaiter().GetResult();
+
+        [Export("injectImageIntoAddFoodPage:")]
+        public void InjectImageIntoAddFoodPage(NSString unusedString) => UITestBackdoorMethodServices.InjectImageIntoAddFoodPage();
+#endif
+
+        #endregion
     }
 }
