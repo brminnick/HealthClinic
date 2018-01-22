@@ -15,7 +15,7 @@ namespace HealthClinic.UITests
                     app_iOS.Invoke("postTestImageToAPI:", "");
                     break;
                 case AndroidApp app_Android:
-                    app.Invoke("PostTestImageToAPI");
+                    app_Android.Invoke("PostTestImageToAPI");
                     break;
 
                 default:
@@ -31,7 +31,7 @@ namespace HealthClinic.UITests
                     app_iOS.Invoke("deleteTestFoodFromAPI:", "");
                     break;
                 case AndroidApp app_Android:
-                    app.Invoke("DeleteTestFoodFromAPI");
+                    app_Android.Invoke("DeleteTestFoodFromAPI");
                     break;
 
                 default:

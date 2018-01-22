@@ -4,6 +4,6 @@
     {
         public const string GetFoodLogsUrl = "https://mercuryhealth-dev.azurewebsites.net/api/FoodLogApi";
         public const string PostFoodUrl = "https://abelmercuryhealthservice-dev.azurewebsites.net/ImageIDAPI/UploadFoodImage1";
-        public const string DeleteFoodLogUrl = "http://abelmercuryhealthservice-dev.azurewebsites.net/FoodApi/DeleteFoodItem";
+        public const string DeleteFoodLogUrl = "https://abelmercuryhealthservice-dev.azurewebsites.net/FoodApi/DeleteFoodItem";
     }
 }

@@ -10,7 +10,7 @@ namespace HealthClinic
         {
             base.OnStart();
 
-
+            AppCenterService.Start();
         }
     }
 }
