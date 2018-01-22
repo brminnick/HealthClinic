@@ -1,6 +1,4 @@
-﻿using System.Net.Http;
-
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 using Xamarin.UITest;
 
