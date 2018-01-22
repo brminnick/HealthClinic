@@ -34,6 +34,8 @@ namespace HealthClinic.UITests
             AddFoodPage = new AddFoodPage(App);
 
             App.Screenshot("App Launched");
+
+            BackdoorMethodServices.DeleteTestFoodFromAPI(App);
         }
 
         [TearDown]
