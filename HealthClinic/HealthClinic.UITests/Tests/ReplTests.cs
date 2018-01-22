@@ -24,8 +24,8 @@ namespace HealthClinic.UITests
         [SetUp]
         public void TestSetup() => _app = AppInitializer.StartApp(_platform);
 
-        [Ignore]
-        [Test]
+        
+        [Test, Ignore]
         public void ReplTest() => _app.Repl();
         #endregion
     }
