@@ -31,6 +31,9 @@ namespace HealthClinic.iOS
         [Export("deleteTestFoodFromAPI:")]
         public void DeleteTestFoodFromAPI(NSString unusedString) =>
             Task.Run(async () => await UITestBackdoorMethodServices.DeleteTestFoodFromAPI()).GetAwaiter().GetResult();
+
+        [Export("injectImageIntoAddFoodPage:")]
+        public void InjectImageIntoAddFoodPage(NSString unusedString) => UITestBackdoorMethodServices.InjectImageIntoAddFoodPage();
 #endif
 
         #endregion

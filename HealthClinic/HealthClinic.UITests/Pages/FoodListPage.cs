@@ -26,6 +26,19 @@ namespace HealthClinic.UITests
             App.Tap(_addFoodButton);
             App.Screenshot("Add Food Button Tapped");
         }
+
+        public bool DoesFoodExistInList(string foodDescription)
+        {
+            try
+            {
+                App.ScrollDownTo(foodDescription);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
 		#endregion
     }
 }

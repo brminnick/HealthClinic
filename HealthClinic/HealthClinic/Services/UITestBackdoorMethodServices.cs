@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
+using Xamarin.Forms;
+
 using HealthClinic.Shared;
 
 namespace HealthClinic
@@ -14,8 +16,56 @@ namespace HealthClinic
         const string _testFoodDescription = "PIZZA";
         #endregion
 
+        #region Fields
+        static AddFoodViewModel _addFoodViewModel;
+        static Stream _testImageAsStream;
+        static byte[] _testImageAsByteArray;
+        #endregion
+
+        #region Properties
+        static AddFoodViewModel AddFoodViewModel
+        {
+            get
+            {
+                if (_addFoodViewModel == null)
+                {
+                    var mainPageNavigationPage = Application.Current.MainPage as HealthClinicNavigationPage;
+                    var addFoodPageNavigationPage = mainPageNavigationPage.Navigation.ModalStack.FirstOrDefault() as HealthClinicNavigationPage;
+
+                    var addFoodPage = addFoodPageNavigationPage?.CurrentPage as AddFoodPage;
+
+                    _addFoodViewModel = addFoodPage?.BindingContext as AddFoodViewModel;
+                }
+
+                return _addFoodViewModel;
+            }
+        }
+
+        static Stream TestImageAsStream
+        {
+            get
+            {
+                if (_testImageAsStream == null)
+                    _testImageAsStream = File.OpenRead("pizza.png");
+
+                return _testImageAsStream;
+            }
+        }
+
+        static byte[] TestImageAsByteArray
+        {
+            get
+            {
+                if (_testImageAsByteArray == null)
+                    _testImageAsByteArray = StreamExtensions.ConvertStreamToByteArrary(TestImageAsStream);
+
+                return _testImageAsByteArray;
+            }
+        }
+        #endregion
+
         #region Methods
-        public static Task PostTestImageToAPI() => FoodListAPIService.PostFoodPhoto(GetTestImage());
+        public static Task PostTestImageToAPI() => FoodListAPIService.PostFoodPhoto(TestImageAsByteArray);
 
         public static async Task DeleteTestFoodFromAPI()
         {
@@ -29,10 +79,10 @@ namespace HealthClinic
             await Task.WhenAll(deletePizzaTaskList);
         }
 
-        static byte[] GetTestImage()
+        public static void InjectImageIntoAddFoodPage()
         {
-            var file = File.OpenRead("pizza.png");
-            return StreamExtensions.ConvertStreamToByteArrary(file);
+            AddFoodViewModel.PhotoBlob = TestImageAsByteArray;
+            AddFoodViewModel.PhotoImageSource = ImageSource.FromStream(() => TestImageAsStream);
         }
         #endregion
     }

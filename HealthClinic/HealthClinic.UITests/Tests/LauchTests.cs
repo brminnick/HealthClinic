@@ -11,9 +11,6 @@ namespace HealthClinic.UITests
         }
 
         [Test]
-        public void LaunchTest()
-        {
-
-        }
+        public void LaunchTest() => FoodListPage.WaitForPageToLoad();
     }
 }

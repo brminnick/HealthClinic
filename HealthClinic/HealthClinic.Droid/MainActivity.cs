@@ -29,6 +29,9 @@ namespace HealthClinic.Droid
         [Export("DeleteTestFoodFromAPI")]
         public void DeleteTestFoodFromAPI() =>
             Task.Run(async () => await UITestBackdoorMethodServices.DeleteTestFoodFromAPI()).GetAwaiter().GetResult();
+
+        [Export("InjectImageIntoAddFoodPage")]
+        public void InjectImageIntoAddFoodPage() => UITestBackdoorMethodServices.InjectImageIntoAddFoodPage();
 #endif
 
         #endregion

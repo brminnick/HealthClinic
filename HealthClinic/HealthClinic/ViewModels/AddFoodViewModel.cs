@@ -15,7 +15,6 @@ namespace HealthClinic
         ICommand _takePhotoCommand, _uploadButtonCommand;
         ImageSource _photoImageSource;
         bool _isPhotoUploading;
-        byte[] _photoBlob;
         #endregion
 
         #region Events
@@ -41,6 +40,8 @@ namespace HealthClinic
             get => _photoImageSource;
             set => SetProperty(ref _photoImageSource, value);
         }
+
+        public byte[] PhotoBlob { get; set; }
         #endregion
 
         #region Methods
@@ -52,9 +53,9 @@ namespace HealthClinic
                 return;
 
             var photoBlobStream = mediaFile.GetStream();
-            _photoBlob = StreamExtensions.ConvertStreamToByteArrary(photoBlobStream);
+            PhotoBlob = StreamExtensions.ConvertStreamToByteArrary(photoBlobStream);
 
-            PhotoImageSource = ImageSource.FromStream(() => new MemoryStream(_photoBlob));
+            PhotoImageSource = ImageSource.FromStream(() => new MemoryStream(PhotoBlob));
         }
 
         async Task ExecuteUploadButtonCommand()
@@ -62,7 +63,7 @@ namespace HealthClinic
             if (IsPhotoUploading)
                 return;
 
-            if (_photoBlob == null)
+            if (PhotoBlob == null)
             {
                 OnUploadPhotoFailed("Take Photo First");
                 return;
@@ -72,7 +73,7 @@ namespace HealthClinic
 
             try
             {
-                var postPhotoBlobResponse = await FoodListAPIService.PostFoodPhoto(_photoBlob).ConfigureAwait(false);
+                var postPhotoBlobResponse = await FoodListAPIService.PostFoodPhoto(PhotoBlob).ConfigureAwait(false);
 
                 if (postPhotoBlobResponse?.StatusCode == System.Net.HttpStatusCode.InternalServerError)
                 {
@@ -82,7 +83,7 @@ namespace HealthClinic
 
                 if (postPhotoBlobResponse == null || postPhotoBlobResponse?.IsSuccessStatusCode == false)
                 {
-                    OnUploadPhotoFailed($"Status Code: {postPhotoBlobResponse?.ReasonPhrase}");
+                    OnUploadPhotoFailed($"Status Code: {postPhotoBlobResponse?.ReasonPhrase ?? "null"}");
                     return;
                 }
 

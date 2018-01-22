@@ -20,28 +20,36 @@ namespace HealthClinic.UITests
             base.TestSetup();
 
             FoodListPage.WaitForPageToLoad();
-
-            BackdoorMethodServices.PostTestImageToAPI(App);
         }
 
         public override void TestTearDown()
         {
             base.TestTearDown();
 
-			BackdoorMethodServices.DeleteTestFoodFromAPI(App);
+            BackdoorMethodServices.DeleteTestFoodFromAPI(App);
         }
 
 
         [Test]
-        public void AddFoodPageTest()
+        public void UploadFoodTest()
         {
             //Arrange
+            const string testFoodDescription = "Pizza";
 
             //Act
             FoodListPage.TapAddFoodButton();
 
+            BackdoorMethodServices.InjectImageIntoAddFoodPage(App);
+            AddFoodPage.TapUploadButton();
+
+            AddFoodPage.WaitForActivityIndicator();
+            AddFoodPage.WaitForNoActivityIndicator();
+
+            AddFoodPage.TapOkDialog();
+
             //Assert
-            AddFoodPage.WaitForPageToLoad();
+            FoodListPage.WaitForPageToLoad();
+            FoodListPage.DoesFoodExistInList(testFoodDescription);
         }
     }
 }
