@@ -9,13 +9,15 @@ using Newtonsoft.Json;
 
 using Xamarin.Forms;
 
+using HealthClinic.Shared;
+
 namespace HealthClinic
 {
     public abstract class BaseHttpClientService
     {
         #region Constant Fields
         static readonly Lazy<JsonSerializer> _serializerHolder = new Lazy<JsonSerializer>();
-        static readonly Lazy<HttpClient> _clientHolder = new Lazy<HttpClient>(() => CreateHttpClient(TimeSpan.FromSeconds(10)));
+        static readonly Lazy<HttpClient> _clientHolder = new Lazy<HttpClient>(() => CreateHttpClient(HttpConstants.HttpTimeOut));
         #endregion
 
         #region Fields

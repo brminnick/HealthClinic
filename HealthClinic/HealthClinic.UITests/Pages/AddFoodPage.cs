@@ -55,7 +55,7 @@ namespace HealthClinic.UITests
 
         public void WaitForNoActivityIndicator()
         {
-            App.WaitForNoElement(_activityIndicator);
+            App.WaitForNoElement(_activityIndicator, timeout: HttpConstants.HttpTimeOut);
             App.Screenshot("Waited For No Activity Indicator");
         }
         #endregion

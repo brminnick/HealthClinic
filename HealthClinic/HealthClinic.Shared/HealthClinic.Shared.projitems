@@ -16,5 +16,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\StringExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\FoodLogModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constants\APIConstants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Constants\HttpConstants.cs" />
   </ItemGroup>
 </Project>
