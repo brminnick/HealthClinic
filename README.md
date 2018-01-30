@@ -1,3 +1,5 @@
+[![Build status](https://build.appcenter.ms/v0.1/apps/e7b0f0bb-38d1-454d-83cc-177475f52c06/branches/master/badge)](https://appcenter.ms)
+
 # HealthClinic
 
 An iOS & Android app that parses images of food to provide nutritional information.
