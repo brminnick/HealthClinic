@@ -37,7 +37,15 @@ namespace HealthClinic.UITests
             BackdoorMethodServices.InjectImageIntoAddFoodPage(App);
             AddFoodPage.TapUploadButton();
 
-            AddFoodPage.WaitForActivityIndicator();
+            try
+            {
+                AddFoodPage.WaitForActivityIndicator();
+            }
+            catch
+            {
+                
+            }
+
             AddFoodPage.WaitForNoActivityIndicator();
 
             AddFoodPage.TapOkDialog();

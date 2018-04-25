@@ -2,6 +2,9 @@
 
 using HealthClinic.Shared;
 
+using Xamarin.UITest.iOS;
+using Xamarin.UITest.Android;
+
 using Query = System.Func<Xamarin.UITest.Queries.AppQuery, Xamarin.UITest.Queries.AppQuery>;
 
 namespace HealthClinic.UITests
@@ -25,13 +28,32 @@ namespace HealthClinic.UITests
         #region Methods
         public void TapUploadButton()
         {
-            App.Tap(_uploadButton);
+            switch(App)
+            {
+                case iOSApp iOSApp:
+                    iOSApp.Tap(_uploadButton);
+                    break;
+
+                case AndroidApp androidApp:
+                    androidApp.Tap("Upload");
+                    break;
+            }
+
             App.Screenshot("Upload Button Tapped");
         }
 
         public void TapCancelButton()
         {
-            App.Tap(_cancelButton);
+            switch (App)
+            {
+                case iOSApp iOSApp:
+                    iOSApp.Tap(_cancelButton);
+                    break;
+
+                case AndroidApp androidApp:
+                    androidApp.Tap("Cancel");
+                    break;
+            }
             App.Screenshot("Cancel Button Tapped");
         }
 

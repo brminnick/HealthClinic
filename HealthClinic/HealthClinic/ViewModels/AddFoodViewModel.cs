@@ -91,7 +91,7 @@ namespace HealthClinic
             }
             catch (Exception e)
             {
-                AppCenterService.LogException(e);
+                AppCenterService.Report(e);
                 OnUploadPhotoFailed(e.Message);
             }
             finally

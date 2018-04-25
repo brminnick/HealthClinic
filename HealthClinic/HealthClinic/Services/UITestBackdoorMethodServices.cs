@@ -1,6 +1,7 @@
 ﻿#if DEBUG
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
@@ -46,7 +47,10 @@ namespace HealthClinic
             get
             {
                 if (_testImageAsStream == null)
-                    _testImageAsStream = File.OpenRead("pizza.png");
+                {
+                    var applicationTypeInfo = Application.Current.GetType().GetTypeInfo();
+                    _testImageAsStream = applicationTypeInfo.Assembly.GetManifestResourceStream($"{applicationTypeInfo.Namespace}.pizza.png");
+                }
 
                 return _testImageAsStream;
             }
@@ -76,7 +80,7 @@ namespace HealthClinic
             foreach (var pizzaFoodItem in pizzaFoodItemList)
                 deletePizzaTaskList.Add(FoodListAPIService.DeleteFoodFromAPI(pizzaFoodItem.Id));
 
-            await Task.WhenAll(deletePizzaTaskList);
+            await Task.WhenAll(deletePizzaTaskList).ConfigureAwait(false);
         }
 
         public static void InjectImageIntoAddFoodPage()

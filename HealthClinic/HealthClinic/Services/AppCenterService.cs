@@ -44,9 +44,20 @@ namespace HealthClinic
             TrackEvent(trackIdentifier, table);
         }
 
+        public static void Report(Exception exception,
+                          IDictionary<string, string> properties = null,
+                          [CallerMemberName] string callerMemberName = "",
+                          [CallerLineNumber] int lineNumber = 0,
+                          [CallerFilePath] string filePath = "")
+        {
+            LogException(exception, callerMemberName, lineNumber, filePath);
+
+            Crashes.TrackError(exception, properties);
+        }
+
 
         [Conditional("DEBUG")]
-        public static void LogException(Exception exception,
+        static void LogException(Exception exception,
             [CallerMemberName] string callerMemberName = "",
             [CallerLineNumber] int lineNumber = 0,
             [CallerFilePath] string filePath = "")

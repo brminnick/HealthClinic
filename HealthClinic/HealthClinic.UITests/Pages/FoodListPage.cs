@@ -1,4 +1,6 @@
 ﻿using Xamarin.UITest;
+using Xamarin.UITest.iOS;
+using Xamarin.UITest.Android;
 
 using HealthClinic.Shared;
 
@@ -23,7 +25,17 @@ namespace HealthClinic.UITests
         #region Methods
         public void TapAddFoodButton()
         {
-            App.Tap(_addFoodButton);
+            switch (App)
+            {
+                case iOSApp iosApp:
+                    iosApp.Tap(_addFoodButton);
+                    break;
+
+                case AndroidApp androidApp:
+                    androidApp.Tap("+");
+                    break;
+
+            }
             App.Screenshot("Add Food Button Tapped");
         }
 
@@ -39,6 +51,6 @@ namespace HealthClinic.UITests
                 return false;
             }
         }
-		#endregion
+        #endregion
     }
 }

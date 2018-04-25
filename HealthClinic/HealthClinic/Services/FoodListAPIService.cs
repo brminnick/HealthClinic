@@ -11,7 +11,7 @@ namespace HealthClinic
         public static Task<List<FoodLogModel>> GetFoodLogs()
         {
             AppCenterService.TrackEvent(AppCenterConstants.GetFoodLogsFromAPITriggered);
-            return GetDataObjectFromAPI<List<FoodLogModel>>(APIConstants.GetFoodLogsUrl);
+            return GetObjectFromAPI<List<FoodLogModel>>(APIConstants.GetFoodLogsUrl);
         }
 
         public static Task<HttpResponseMessage> PostFoodPhoto(byte[] foodPhoto)
@@ -23,7 +23,7 @@ namespace HealthClinic
         public static Task<HttpResponseMessage> DeleteFoodFromAPI(int id)
         {
             AppCenterService.TrackEvent(AppCenterConstants.DeleteFoodAPITriggered);
-            return GetResponseMessageFromAPI($"{APIConstants.DeleteFoodLogUrl}?id={id}");
+            return GetObjectFromAPI($"{APIConstants.DeleteFoodLogUrl}?id={id}");
         }
     }
 }
