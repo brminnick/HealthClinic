@@ -144,7 +144,7 @@ namespace HealthClinic
             }
         }
 
-        static async ValueTask<HttpRequestMessage> GetHttpRequestMessage<T>(HttpMethod method, string apiUrl, T requestData = default)
+        static async Task<HttpRequestMessage> GetHttpRequestMessage<T>(HttpMethod method, string apiUrl, T requestData = default)
         {
             var httpRequestMessage = new HttpRequestMessage(method, apiUrl);
 

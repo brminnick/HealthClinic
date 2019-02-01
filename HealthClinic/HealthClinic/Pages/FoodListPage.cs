@@ -22,6 +22,8 @@ namespace HealthClinic
                 Text = "+",
                 AutomationId = AutomationIdConstants.FoodListPage_AddFoodButton
             };
+            _addFoodButton.Clicked += HandleAddFoodButtonClicked;
+
             ToolbarItems.Add(_addFoodButton);
 
             _foodListView = new ListView(ListViewCachingStrategy.RecycleElement)
@@ -33,6 +35,7 @@ namespace HealthClinic
                 SeparatorVisibility = SeparatorVisibility.None,
                 RowHeight = 230
             };
+            _foodListView.ItemTapped += HandleItemTapped;
             _foodListView.SetBinding(ListView.ItemsSourceProperty, nameof(ViewModel.FoodList));
             _foodListView.SetBinding(ListView.IsRefreshingProperty, nameof(ViewModel.IsRefreshing));
             _foodListView.SetBinding(ListView.RefreshCommandProperty, nameof(ViewModel.PullToRefreshCommand));
@@ -51,33 +54,21 @@ namespace HealthClinic
             Device.BeginInvokeOnMainThread(_foodListView.BeginRefresh);
         }
 
-        protected override void SubscribeEventHandlers()
-        {
-            _addFoodButton.Clicked += HandleAddFoodButtonClicked;
-            _foodListView.ItemSelected += HandleItemSelected;
-
-        }
-
-        protected override void UnsubscribeEventHandlers()
-        {
-            _addFoodButton.Clicked -= HandleAddFoodButtonClicked;
-            _foodListView.ItemSelected -= HandleItemSelected;
-        }
-
         void HandleAddFoodButtonClicked(object sender, EventArgs e)
         {
             AppCenterService.TrackEvent(AppCenterConstants.AddFoodListPageButtonTapped);
             Device.BeginInvokeOnMainThread(async () => await Navigation.PushModalAsync(new HealthClinicNavigationPage(new AddFoodPage())));
         }
 
-        void HandleItemSelected(object sender, SelectedItemChangedEventArgs e)
+        void HandleItemTapped(object sender, ItemTappedEventArgs e)
         {
-            var itemTapped = e.SelectedItem as FoodLogModel;
+            if (e.Item is FoodLogModel itemTapped)
+            {
+                AppCenterService.TrackEvent(AppCenterConstants.FoodListItemTapped,
+                                            new Dictionary<string, string> { { AppCenterConstants.Description, itemTapped?.Description_PascalCase } });
 
-            AppCenterService.TrackEvent(AppCenterConstants.FoodListItemTapped,
-                                        new Dictionary<string, string> { { AppCenterConstants.Description, itemTapped?.Description_PascalCase } });
-            
-            _foodListView.SelectedItem = null;
+                _foodListView.SelectedItem = null;
+            }
         }
         #endregion
     }

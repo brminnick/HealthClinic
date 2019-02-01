@@ -1,4 +1,5 @@
 ﻿using Xamarin.Forms;
+
 namespace HealthClinic
 {
     public abstract class BaseContentPage<T> : ContentPage where T : BaseViewModel, new()
@@ -15,26 +16,6 @@ namespace HealthClinic
 
         #region Properties
         protected T ViewModel { get; }
-        #endregion
-
-        #region Methods
-        protected abstract void SubscribeEventHandlers();
-
-        protected abstract void UnsubscribeEventHandlers();
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-
-            SubscribeEventHandlers();
-        }
-
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-
-            UnsubscribeEventHandlers();
-        }
         #endregion
     }
 }

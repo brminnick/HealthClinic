@@ -1,10 +1,11 @@
-﻿namespace HealthClinic.Shared
+﻿using System;
+
+using Xamarin.Forms;
+
+namespace HealthClinic
 {
     public static class AppCenterConstants
     {
-        public const string AppCenterAPIKey_iOS = "c1d49704-4a36-434f-b90b-133ee6c9508c";
-        public const string AppCenterAPIKey_Droid = "";
-
         public const string AddFoodListPageAppeared = "Add Food List Page Appeared";
         public const string AddFoodListPageButtonTapped = "Add Food List Page Button Tapped";
         public const string CancelButtonTapped = "Cancel Button Tapped";
@@ -19,5 +20,25 @@
         public const string UploadPhotoToSucceeded = "Upload Photo To Succeeded";
         public const string UploadPhotoToAPITriggered = "Upload Photo To API Triggered";
         public const string TakePhotoButtonTapped = "Take Photo Button Tapped";
+
+        const string AppCenterAPIKey_iOS = "c1d49704-4a36-434f-b90b-133ee6c9508c";
+        const string AppCenterAPIKey_Droid = "";
+
+        public static string AppCenterAPIKey => GetApiKey();
+
+        static string GetApiKey()
+        {
+            switch (Device.RuntimePlatform)
+            {
+                case Device.iOS:
+                    return AppCenterAPIKey_iOS;
+
+                case Device.Android:
+                    return AppCenterAPIKey_Droid;
+
+                default:
+                    throw new NotSupportedException();
+            }
+        }
     }
 }

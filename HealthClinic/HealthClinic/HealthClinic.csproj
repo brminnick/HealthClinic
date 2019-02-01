@@ -5,13 +5,13 @@
 		<LangVersion>latest</LangVersion> 
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Xam.Plugin.Media" Version="3.1.3" />
-		<PackageReference Include="System.Threading.Tasks.Extensions" Version="4.4.0" />
-		<PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-		<PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.3.6" />
-		<PackageReference Include="Xamarin.Forms" Version="2.5.1.444934" />
-		<PackageReference Include="Microsoft.AppCenter.Analytics" Version="1.6.0" />
-		<PackageReference Include="Microsoft.AppCenter.Crashes" Version="1.6.0" />
+		<PackageReference Include="Xam.Plugin.Media" Version="4.0.1.5" />
+		<PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+		<PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.4.859" />
+		<PackageReference Include="Xamarin.Forms" Version="3.4.0.1029999" />
+		<PackageReference Include="Microsoft.AppCenter.Analytics" Version="1.13.0" />
+		<PackageReference Include="Microsoft.AppCenter.Crashes" Version="1.13.0" />
+		<PackageReference Include="AsyncAwaitBestPractices.MVVM" Version="2.1.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Pages\" />

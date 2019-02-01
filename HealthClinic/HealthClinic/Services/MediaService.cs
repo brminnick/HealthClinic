@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 
+using AsyncAwaitBestPractices;
+
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 
@@ -10,8 +12,16 @@ namespace HealthClinic
 {
     public static class MediaService
     {
+        #region Constant Fields
+        readonly static WeakEventManager _noCameraFoundEventManager = new WeakEventManager();
+        #endregion
+
         #region Events
-        public static event EventHandler NoCameraFound;
+        public static event EventHandler NoCameraFound
+        {
+            add => _noCameraFoundEventManager.AddEventHandler(value);
+            remove => _noCameraFoundEventManager.RemoveEventHandler(value);
+        }
         #endregion
 
         #region Methods
@@ -38,7 +48,7 @@ namespace HealthClinic
             return await mediaFileTCS.Task;
         }
 
-        static void OnNoCameraFound() => NoCameraFound?.Invoke(null, EventArgs.Empty);
+        static void OnNoCameraFound() => _noCameraFoundEventManager.HandleEvent(null, EventArgs.Empty, nameof(NoCameraFound));
         #endregion
     }
 }

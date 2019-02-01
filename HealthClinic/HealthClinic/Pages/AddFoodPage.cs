@@ -20,6 +20,10 @@ namespace HealthClinic
         #region Constructors
         public AddFoodPage() : base(PageTitleConstants.AddFoodPage)
         {
+            MediaService.NoCameraFound += HandleNoCameraFound;
+            ViewModel.UploadPhotoCompleted += HandleUploadPhotoCompleted;
+            ViewModel.UploadPhotoFailed += HandleUploadPhotoFailed;
+
             _takePhotoButton = new HealthClinicButton
             {
                 Text = "Take Photo",
@@ -45,11 +49,13 @@ namespace HealthClinic
                 Priority = 1,
                 AutomationId = AutomationIdConstants.AddFoodPage_CancelButton
             };
+            _cancelToolbarItem.Clicked += HandleCancelToolbarItemClicked;
+
             ToolbarItems.Add(_cancelToolbarItem);
 
             var activityIndicator = new ActivityIndicator
             {
-                Color = ColorConstants.OffWhite,
+                Color = ColorConstants.Maroon,
                 AutomationId = AutomationIdConstants.AddFoodPage_ActivityIndicator
             };
             activityIndicator.SetBinding(IsVisibleProperty, nameof(ViewModel.IsPhotoUploading));
@@ -81,22 +87,6 @@ namespace HealthClinic
             base.OnAppearing();
 
             AppCenterService.TrackEvent(AppCenterConstants.AddFoodListPageAppeared);
-        }
-
-        protected override void SubscribeEventHandlers()
-        {
-            MediaService.NoCameraFound += HandleNoCameraFound;
-            _cancelToolbarItem.Clicked += HandleCancelToolbarItemClicked;
-            ViewModel.UploadPhotoCompleted += HandleUploadPhotoCompleted;
-            ViewModel.UploadPhotoFailed += HandleUploadPhotoFailed;
-        }
-
-        protected override void UnsubscribeEventHandlers()
-        {
-            MediaService.NoCameraFound -= HandleNoCameraFound;
-            _cancelToolbarItem.Clicked -= HandleCancelToolbarItemClicked;
-            ViewModel.UploadPhotoCompleted -= HandleUploadPhotoCompleted;
-            ViewModel.UploadPhotoFailed -= HandleUploadPhotoFailed;
         }
 
         void HandleCancelToolbarItemClicked(object sender, EventArgs e)

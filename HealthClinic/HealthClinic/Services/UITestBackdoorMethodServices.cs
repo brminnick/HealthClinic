@@ -14,7 +14,7 @@ namespace HealthClinic
     public static class UITestBackdoorMethodServices
     {
         #region Constant Fields
-        const string _testFoodDescription = "PIZZA";
+        const string _testFoodDescription = "pizza";
         #endregion
 
         #region Fields
@@ -28,7 +28,7 @@ namespace HealthClinic
         {
             get
             {
-                if (_addFoodViewModel == null)
+                if (_addFoodViewModel is null)
                 {
                     var mainPageNavigationPage = Application.Current.MainPage as HealthClinicNavigationPage;
                     var addFoodPageNavigationPage = mainPageNavigationPage.Navigation.ModalStack.FirstOrDefault() as HealthClinicNavigationPage;
@@ -46,10 +46,10 @@ namespace HealthClinic
         {
             get
             {
-                if (_testImageAsStream == null)
+                if (_testImageAsStream is null)
                 {
                     var applicationTypeInfo = Application.Current.GetType().GetTypeInfo();
-                    _testImageAsStream = applicationTypeInfo.Assembly.GetManifestResourceStream($"{applicationTypeInfo.Namespace}.pizza.png");
+                    _testImageAsStream = applicationTypeInfo.Assembly.GetManifestResourceStream($"{applicationTypeInfo.Namespace}.{_testFoodDescription}.png");
                 }
 
                 return _testImageAsStream;
@@ -60,7 +60,7 @@ namespace HealthClinic
         {
             get
             {
-                if (_testImageAsByteArray == null)
+                if (_testImageAsByteArray is null)
                     _testImageAsByteArray = StreamExtensions.ConvertStreamToByteArrary(TestImageAsStream);
 
                 return _testImageAsByteArray;

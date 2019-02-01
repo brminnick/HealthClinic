@@ -12,24 +12,8 @@ namespace HealthClinic
 {
     public static class AppCenterService
     {
-        #region Enums
-        enum _pathType { Windows, Linux };
-        #endregion
-
         #region Methods
-        public static void Start()
-        {
-            switch (Xamarin.Forms.Device.RuntimePlatform)
-            {
-                case Xamarin.Forms.Device.Android:
-                    Start(AppCenterConstants.AppCenterAPIKey_Droid);
-                    break;
-
-                case Xamarin.Forms.Device.iOS:
-                    Start(AppCenterConstants.AppCenterAPIKey_iOS);
-                    break;
-            }
-        }
+        public static void Start() => Start(AppCenterConstants.AppCenterAPIKey);
 
         public static void TrackEvent(string trackIdentifier, IDictionary<string, string> table = null) =>
             Analytics.TrackEvent(trackIdentifier, table);
@@ -62,43 +46,13 @@ namespace HealthClinic
             [CallerLineNumber] int lineNumber = 0,
             [CallerFilePath] string filePath = "")
         {
-            var fileName = GetFileNameFromFilePath(filePath);
+            var fileName = System.IO.Path.GetFileName(filePath);
 
             Debug.WriteLine(exception.GetType());
             Debug.WriteLine($"Error: {exception.Message}");
             Debug.WriteLine($"Line Number: {lineNumber}");
             Debug.WriteLine($"Caller Name: {callerMemberName}");
             Debug.WriteLine($"File Name: {fileName}");
-        }
-
-        static string GetFileNameFromFilePath(string filePath)
-        {
-            string fileName;
-            _pathType pathType;
-
-            var directorySeparator = new Dictionary<_pathType, string>
-            {
-                { _pathType.Linux, "/" },
-                { _pathType.Windows, @"\" }
-            };
-
-            pathType = filePath.Contains(directorySeparator[_pathType.Linux]) ? _pathType.Linux : _pathType.Windows;
-
-            while (true)
-            {
-                if (!(filePath.Contains(directorySeparator[pathType])))
-                {
-                    fileName = filePath;
-                    break;
-                }
-
-                var indexOfDirectorySeparator = filePath.IndexOf(directorySeparator[pathType], StringComparison.Ordinal);
-                var newStringStartIndex = indexOfDirectorySeparator + 1;
-
-                filePath = filePath.Substring(newStringStartIndex, filePath.Length - newStringStartIndex);
-            }
-
-            return fileName;
         }
 
         static void Start(string apiKey) => Microsoft.AppCenter.AppCenter.Start(apiKey, typeof(Analytics), typeof(Crashes));
