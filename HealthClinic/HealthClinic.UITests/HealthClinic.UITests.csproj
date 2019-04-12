@@ -1,66 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4E201A16-2D39-47D0-A541-A4AE623E9778}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>HealthClinic.UITests</RootNamespace>
-    <AssemblyName>HealthClinic.UITests</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.UITest">
-      <HintPath>..\packages\Xamarin.UITest.2.2.7.2001-dev\lib\net45\Xamarin.UITest.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Tests\BaseTest.cs" />
-    <Compile Include="Tests\FoodTests.cs" />
-    <Compile Include="Tests\LauchTests.cs" />
-    <Compile Include="Tests\ReplTests.cs" />
-    <Compile Include="Pages\AddFoodPage.cs" />
-    <Compile Include="Pages\BasePage.cs" />
-    <Compile Include="Pages\FoodListPage.cs" />
-    <Compile Include="AppInitializer.cs" />
-    <Compile Include="Services\BackdoorMethodServices.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\HealthClinic.iOS\HealthClinic.iOS.csproj">
-      <Project>{23A12335-B2FA-4450-A648-E55B31513253}</Project>
-      <Name>HealthClinic.iOS</Name>
-      <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\HealthClinic.Droid\HealthClinic.Droid.csproj">
-      <Project>{B543435F-636E-47C5-94C2-DDCDEB617233}</Project>
-      <Name>HealthClinic.Droid</Name>
-      <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
-      <Private>False</Private>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="..\HealthClinic.Shared\HealthClinic.Shared.projitems" Label="Shared" Condition="Exists('..\HealthClinic.Shared\HealthClinic.Shared.projitems')" />
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+        <ProjectGuid>{4E201A16-2D39-47D0-A541-A4AE623E9778}</ProjectGuid>
+        <OutputType>Library</OutputType>
+        <RootNamespace>HealthClinic.UITests</RootNamespace>
+        <AssemblyName>HealthClinic.UITests</AssemblyName>
+        <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <OutputPath>bin\Debug</OutputPath>
+        <DefineConstants>DEBUG;</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <Optimize>true</Optimize>
+        <OutputPath>bin\Release</OutputPath>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="System" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="NUnit" Version="2.6.4" />
+        <PackageReference Include="Xamarin.UITest">
+          <Version>2.2.7.2002-dev</Version>
+        </PackageReference>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Tests\BaseTest.cs" />
+        <Compile Include="Tests\FoodTests.cs" />
+        <Compile Include="Tests\LauchTests.cs" />
+        <Compile Include="Tests\ReplTests.cs" />
+        <Compile Include="Pages\AddFoodPage.cs" />
+        <Compile Include="Pages\BasePage.cs" />
+        <Compile Include="Pages\FoodListPage.cs" />
+        <Compile Include="AppInitializer.cs" />
+        <Compile Include="Services\BackdoorMethodServices.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\HealthClinic.iOS\HealthClinic.iOS.csproj">
+            <Project>{23A12335-B2FA-4450-A648-E55B31513253}</Project>
+            <Name>HealthClinic.iOS</Name>
+            <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
+            <Private>False</Private>
+        </ProjectReference>
+        <ProjectReference Include="..\HealthClinic.Droid\HealthClinic.Droid.csproj">
+            <Project>{B543435F-636E-47C5-94C2-DDCDEB617233}</Project>
+            <Name>HealthClinic.Droid</Name>
+            <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
+            <Private>False</Private>
+        </ProjectReference>
+    </ItemGroup>
+    <Import Project="..\HealthClinic.Shared\HealthClinic.Shared.projitems" Label="Shared" Condition="Exists('..\HealthClinic.Shared\HealthClinic.Shared.projitems')" />
+    <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

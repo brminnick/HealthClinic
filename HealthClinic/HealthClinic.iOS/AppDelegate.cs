@@ -11,7 +11,7 @@ namespace HealthClinic.iOS
         public override bool FinishedLaunching(UIApplication uiApplication, NSDictionary launchOptions)
         {
             global::Xamarin.Forms.Forms.Init();
-            FFImageLoading.Forms.Touch.CachedImageRenderer.Init();
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
 
 #if DEBUG
             Xamarin.Calabash.Start();
@@ -25,12 +25,10 @@ namespace HealthClinic.iOS
         #region BackdoorMethods
 #if DEBUG
         [Export("postTestImageToAPI:")]
-        public void PostTestImageToAPI(NSString unusedString) =>
-            Task.Run(async () => await UITestBackdoorMethodServices.PostTestImageToAPI()).GetAwaiter().GetResult();
+        public void PostTestImageToAPI(NSString unusedString) => UITestBackdoorMethodServices.PostTestImageToAPI().GetAwaiter();
 
         [Export("deleteTestFoodFromAPI:")]
-        public void DeleteTestFoodFromAPI(NSString unusedString) =>
-            Task.Run(async () => await UITestBackdoorMethodServices.DeleteTestFoodFromAPI()).GetAwaiter().GetResult();
+        public void DeleteTestFoodFromAPI(NSString unusedString) => UITestBackdoorMethodServices.DeleteTestFoodFromAPI().GetAwaiter();
 
         [Export("injectImageIntoAddFoodPage:")]
         public void InjectImageIntoAddFoodPage(NSString unusedString) => UITestBackdoorMethodServices.InjectImageIntoAddFoodPage();

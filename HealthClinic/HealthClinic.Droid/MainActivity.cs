@@ -23,12 +23,10 @@ namespace HealthClinic.Droid
         #region BackdoorMethods
 #if DEBUG
         [Export(nameof(PostTestImageToAPI))]
-        public void PostTestImageToAPI() =>
-            Task.Run(async () => await UITestBackdoorMethodServices.PostTestImageToAPI()).GetAwaiter().GetResult();
+        public void PostTestImageToAPI() => UITestBackdoorMethodServices.PostTestImageToAPI().GetAwaiter();
 
         [Export(nameof(DeleteTestFoodFromAPI))]
-        public void DeleteTestFoodFromAPI() =>
-            Task.Run(async () => await UITestBackdoorMethodServices.DeleteTestFoodFromAPI()).GetAwaiter().GetResult();
+        public void DeleteTestFoodFromAPI() => UITestBackdoorMethodServices.DeleteTestFoodFromAPI().GetAwaiter();
 
         [Export(nameof(InjectImageIntoAddFoodPage))]
         public void InjectImageIntoAddFoodPage() => UITestBackdoorMethodServices.InjectImageIntoAddFoodPage();
@@ -45,7 +43,7 @@ namespace HealthClinic.Droid
 
             global::Xamarin.Forms.Forms.SetFlags("FastRenderers_Experimental");
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            FFImageLoading.Forms.Droid.CachedImageRenderer.Init(true);
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init(true);
 
             LoadApplication(new App());
         }
