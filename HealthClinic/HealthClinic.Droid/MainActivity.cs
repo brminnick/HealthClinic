@@ -23,10 +23,10 @@ namespace HealthClinic.Droid
         #region BackdoorMethods
 #if DEBUG
         [Export(nameof(PostTestImageToAPI))]
-        public void PostTestImageToAPI() => UITestBackdoorMethodServices.PostTestImageToAPI().GetAwaiter();
+        public async void PostTestImageToAPI() => await UITestBackdoorMethodServices.PostTestImageToAPI().ConfigureAwait(false);
 
         [Export(nameof(DeleteTestFoodFromAPI))]
-        public void DeleteTestFoodFromAPI() => UITestBackdoorMethodServices.DeleteTestFoodFromAPI().GetAwaiter();
+        public async void DeleteTestFoodFromAPI() => await UITestBackdoorMethodServices.DeleteTestFoodFromAPI().ConfigureAwait(false);
 
         [Export(nameof(InjectImageIntoAddFoodPage))]
         public void InjectImageIntoAddFoodPage() => UITestBackdoorMethodServices.InjectImageIntoAddFoodPage();

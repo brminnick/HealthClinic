@@ -25,11 +25,11 @@ namespace HealthClinic.iOS
         #region BackdoorMethods
 #if DEBUG
         [Export("postTestImageToAPI:")]
-        public void PostTestImageToAPI(NSString unusedString) => UITestBackdoorMethodServices.PostTestImageToAPI().GetAwaiter();
+        public async void PostTestImageToAPI(NSString unusedString) => await UITestBackdoorMethodServices.PostTestImageToAPI().ConfigureAwait(false);
 
         [Export("deleteTestFoodFromAPI:")]
-        public void DeleteTestFoodFromAPI(NSString unusedString) => UITestBackdoorMethodServices.DeleteTestFoodFromAPI().GetAwaiter();
-
+        public async void DeleteTestFoodFromAPI(NSString unusedString) => await UITestBackdoorMethodServices.DeleteTestFoodFromAPI().ConfigureAwait(false);
+        
         [Export("injectImageIntoAddFoodPage:")]
         public void InjectImageIntoAddFoodPage(NSString unusedString) => UITestBackdoorMethodServices.InjectImageIntoAddFoodPage();
 #endif

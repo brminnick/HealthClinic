@@ -25,7 +25,7 @@ namespace HealthClinic.UITests
         public void TestSetup() => _app = AppInitializer.StartApp(_platform);
 
         
-        [Test, Ignore]
+        [Test, Ignore("REPL only used for writing tests")]
         public void ReplTest() => _app.Repl();
         #endregion
     }
