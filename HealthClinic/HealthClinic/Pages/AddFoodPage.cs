@@ -13,7 +13,7 @@ namespace HealthClinic
     {
         #region Constant Fields
         readonly HealthClinicButton _takePhotoButton;
-        readonly CachedImage _photoImage;
+        readonly Image _photoImage;
         readonly ToolbarItem _uploadToolbarItem, _cancelToolbarItem;
         #endregion
 
@@ -31,8 +31,8 @@ namespace HealthClinic
             _takePhotoButton.SetBinding(Button.CommandProperty, nameof(ViewModel.TakePhotoCommand));
             _takePhotoButton.SetBinding(IsEnabledProperty, new Binding(nameof(ViewModel.IsPhotoUploading), BindingMode.Default, new InverseBooleanConverter(), ViewModel.IsPhotoUploading));
 
-            _photoImage = new CachedImage();
-            _photoImage.SetBinding(CachedImage.SourceProperty, nameof(ViewModel.PhotoImageSource));
+            _photoImage = new Image();
+            _photoImage.SetBinding(Image.SourceProperty, nameof(ViewModel.PhotoImageSource));
 
             _uploadToolbarItem = new ToolbarItem
             {

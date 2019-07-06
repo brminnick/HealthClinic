@@ -41,9 +41,9 @@ namespace HealthClinic.Droid
 
             base.OnCreate(savedInstanceState);
 
-            global::Xamarin.Forms.Forms.SetFlags("FastRenderers_Experimental");
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init(true);
+            FFImageLoading.Forms.Platform.CachedImageRenderer.InitImageViewHandler();
 
             LoadApplication(new App());
         }

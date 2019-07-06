@@ -3,9 +3,8 @@ using System.Windows.Input;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
-using Xamarin.Forms;
-
 using HealthClinic.Shared;
+
 using AsyncAwaitBestPractices.MVVM;
 
 namespace HealthClinic
@@ -20,7 +19,7 @@ namespace HealthClinic
 
         #region Properties
         public ICommand PullToRefreshCommand => _pullToRefreshCommand ??
-            (_pullToRefreshCommand = new AsyncCommand(ExecutePullToRefreshCommand, continueOnCapturedContext: false));
+            (_pullToRefreshCommand = new AsyncCommand(ExecutePullToRefreshCommand));
 
         public bool IsRefreshing
         {

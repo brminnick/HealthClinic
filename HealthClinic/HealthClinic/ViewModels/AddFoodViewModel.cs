@@ -40,10 +40,10 @@ namespace HealthClinic
 
         #region Properties
         public ICommand TakePhotoCommand => _takePhotoCommand ??
-            (_takePhotoCommand = new AsyncCommand(ExecuteTakePhotoCommand, continueOnCapturedContext: false));
+            (_takePhotoCommand = new AsyncCommand(ExecuteTakePhotoCommand));
 
         public ICommand UploadButtonCommand => _uploadButtonCommand ??
-            (_uploadButtonCommand = new AsyncCommand(ExecuteUploadButtonCommand, continueOnCapturedContext: false));
+            (_uploadButtonCommand = new AsyncCommand(ExecuteUploadButtonCommand));
 
         public bool IsPhotoUploading
         {
