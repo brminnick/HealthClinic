@@ -1,87 +1,63 @@
 ﻿using System;
-using System.Collections.Generic;
-
-using Xamarin.Forms;
-
-using FFImageLoading.Forms;
-
+using System.Threading.Tasks;
 using HealthClinic.Shared;
+using Xamarin.CommunityToolkit.Markup;
+using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace HealthClinic
 {
     public class AddFoodPage : BaseContentPage<AddFoodViewModel>
     {
-        #region Constant Fields
-        readonly HealthClinicButton _takePhotoButton;
-        readonly Image _photoImage;
-        readonly ToolbarItem _uploadToolbarItem, _cancelToolbarItem;
-        #endregion
-
-        #region Constructors
         public AddFoodPage() : base(PageTitleConstants.AddFoodPage)
         {
             MediaService.NoCameraFound += HandleNoCameraFound;
-            ViewModel.UploadPhotoCompleted += HandleUploadPhotoCompleted;
             ViewModel.UploadPhotoFailed += HandleUploadPhotoFailed;
+            ViewModel.UploadPhotoCompleted += HandleUploadPhotoCompleted;
 
-            _takePhotoButton = new HealthClinicButton
-            {
-                Text = "Take Photo",
-            };
-            _takePhotoButton.SetBinding(Button.CommandProperty, nameof(ViewModel.TakePhotoCommand));
-            _takePhotoButton.SetBinding(IsEnabledProperty, new Binding(nameof(ViewModel.IsPhotoUploading), BindingMode.Default, new InverseBooleanConverter(), ViewModel.IsPhotoUploading));
-
-            _photoImage = new Image();
-            _photoImage.SetBinding(Image.SourceProperty, nameof(ViewModel.PhotoImageSource));
-
-            _uploadToolbarItem = new ToolbarItem
+            ToolbarItems.Add(new ToolbarItem
             {
                 Text = "Upload",
                 Priority = 0,
                 AutomationId = AutomationIdConstants.AddFoodPage_UploadButton,
-            };
-            _uploadToolbarItem.SetBinding(MenuItem.CommandProperty, nameof(ViewModel.UploadButtonCommand));
-            ToolbarItems.Add(_uploadToolbarItem);
+            }.Bind(MenuItem.CommandProperty, nameof(ViewModel.UploadButtonCommand)));
 
-            _cancelToolbarItem = new ToolbarItem
+            ToolbarItems.Add(new ToolbarItem
             {
                 Text = "Cancel",
                 Priority = 1,
                 AutomationId = AutomationIdConstants.AddFoodPage_CancelButton
-            };
-            _cancelToolbarItem.Clicked += HandleCancelToolbarItemClicked;
-
-            ToolbarItems.Add(_cancelToolbarItem);
-
-            var activityIndicator = new ActivityIndicator
-            {
-                Color = ColorConstants.Maroon,
-                AutomationId = AutomationIdConstants.AddFoodPage_ActivityIndicator
-            };
-            activityIndicator.SetBinding(IsVisibleProperty, nameof(ViewModel.IsPhotoUploading));
-            activityIndicator.SetBinding(ActivityIndicator.IsRunningProperty, nameof(ViewModel.IsPhotoUploading));
+            }.Bind<ToolbarItem, bool, bool>(ToolbarItem.IsEnabledProperty, nameof(AddFoodViewModel.IsPhotoUploading), convert: isPhotoUploading => !isPhotoUploading)
+             .Invoke(cancelButton => cancelButton.Clicked += HandleCancelToolbarItemClicked));
 
             Padding = new Thickness(20);
 
-            var stackLayout = new StackLayout
+            Content = new ScrollView
             {
-                Spacing = 20,
+                Content = new StackLayout
+                {
+                    Spacing = 20,
 
-                VerticalOptions = LayoutOptions.Start,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
+                    VerticalOptions = LayoutOptions.Start,
+                    HorizontalOptions = LayoutOptions.FillAndExpand,
 
-                Children = {
-                    _photoImage,
-                    _takePhotoButton,
-                    activityIndicator
+                    Children =
+                    {
+                        new Image()
+                            .Bind(Image.SourceProperty, nameof(ViewModel.PhotoImageSource)),
+
+                        new HealthClinicButton { Text = "Take Photo" }
+                            .Bind(Button.CommandProperty, nameof(ViewModel.TakePhotoCommand))
+                            .Bind<Button, bool, bool>(IsEnabledProperty, nameof(ViewModel.IsPhotoUploading), convert: isPhotoUploading => !isPhotoUploading),
+
+                        new ActivityIndicator { Color = ColorConstants.Maroon, AutomationId = AutomationIdConstants.AddFoodPage_ActivityIndicator }
+                            .Bind(IsVisibleProperty, nameof(ViewModel.IsPhotoUploading))
+                            .Bind(ActivityIndicator.IsRunningProperty, nameof(ViewModel.IsPhotoUploading))
+                    }
                 }
             };
-
-            Content = new ScrollView { Content = stackLayout };
         }
-        #endregion
 
-        #region Methods
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -92,41 +68,37 @@ namespace HealthClinic
         void HandleCancelToolbarItemClicked(object sender, EventArgs e)
         {
             AppCenterService.TrackEvent(AppCenterConstants.CancelButtonTapped);
-
-            if (!ViewModel.IsPhotoUploading)
-                ClosePage();
+            ClosePage();
         }
 
         void HandleUploadPhotoCompleted(object sender, EventArgs e)
         {
             AppCenterService.TrackEvent(AppCenterConstants.UploadPhotoToSucceeded);
 
-            Device.BeginInvokeOnMainThread(async () =>
+            MainThread.BeginInvokeOnMainThread(async () =>
             {
                 await DisplayAlert("Photo Saved", string.Empty, "OK");
-                ClosePage();
+                await ClosePage();
             });
         }
 
-        void HandleUploadPhotoFailed(object sender, string errorMessage)
+        async void HandleUploadPhotoFailed(object sender, string errorMessage)
         {
-            AppCenterService.TrackEvent(AppCenterConstants.UploadPhotoFailed,
-                                        new Dictionary<string, string> { { AppCenterConstants.Error, errorMessage } });
+            AppCenterService.TrackEvent(AppCenterConstants.UploadPhotoFailed, AppCenterConstants.Error, errorMessage);
 
-            DisplayErrorMessage(errorMessage);
+            await DisplayErrorMessage(errorMessage);
         }
 
-        void HandleNoCameraFound(object sender, EventArgs e)
+        async void HandleNoCameraFound(object sender, EventArgs e)
         {
             AppCenterService.TrackEvent(AppCenterConstants.NoCameraFound);
 
-            DisplayErrorMessage("No Camera Found");
+            await DisplayErrorMessage("No Camera Found");
         }
 
-        void DisplayErrorMessage(string message) =>
-            Device.BeginInvokeOnMainThread(async () => await DisplayAlert("Error", message, "OK"));
+        Task DisplayErrorMessage(string message) =>
+            MainThread.InvokeOnMainThreadAsync(() => DisplayAlert("Error", message, "OK"));
 
-        void ClosePage() => Device.BeginInvokeOnMainThread(async () => await Navigation.PopModalAsync());
-        #endregion
+        Task ClosePage() => MainThread.InvokeOnMainThreadAsync(() => Navigation.PopModalAsync());
     }
 }

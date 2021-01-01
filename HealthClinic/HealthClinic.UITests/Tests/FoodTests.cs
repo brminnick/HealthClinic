@@ -1,10 +1,11 @@
-﻿using NUnit.Framework;
+﻿using HealthClinic.Shared;
+using NUnit.Framework;
 
 using Xamarin.UITest;
 
 namespace HealthClinic.UITests
 {
-    public class FoodTests : BaseTest
+    class FoodTests : BaseTest
     {
         public FoodTests(Platform platform) : base(platform)
         {
@@ -21,7 +22,7 @@ namespace HealthClinic.UITests
         {
             base.TestTearDown();
 
-            BackdoorMethodServices.DeleteTestFoodFromAPI(App);
+            App.InvokeBackdoorMethod(BackdoorMethodConstants.DeleteTestFoodFromAPI);
         }
 
 
@@ -34,7 +35,7 @@ namespace HealthClinic.UITests
             //Act
             FoodListPage.TapAddFoodButton();
 
-            BackdoorMethodServices.InjectImageIntoAddFoodPage(App);
+            App.InvokeBackdoorMethod(BackdoorMethodConstants.InjectImageIntoAddFoodPage);
             AddFoodPage.TapUploadButton();
 
             try
@@ -43,7 +44,7 @@ namespace HealthClinic.UITests
             }
             catch
             {
-                
+
             }
 
             AddFoodPage.WaitForNoActivityIndicator();

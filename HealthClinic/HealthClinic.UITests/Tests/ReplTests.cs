@@ -1,32 +1,23 @@
-﻿using Xamarin.UITest;
-
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using Xamarin.UITest;
 
 namespace HealthClinic.UITests
 {
     [TestFixture(Platform.Android)]
     [TestFixture(Platform.iOS)]
-    public class ReplTests
+    class ReplTests
     {
-        #region Constant Fields
         readonly Platform _platform;
-        #endregion
 
-        #region Fields
-        IApp _app;
-        #endregion
+        IApp? _app;
 
-        #region Constructors
         public ReplTests(Platform platform) => _platform = platform;
-        #endregion
 
-        #region Methods
         [SetUp]
         public void TestSetup() => _app = AppInitializer.StartApp(_platform);
 
-        
+
         [Test, Ignore("REPL only used for writing tests")]
-        public void ReplTest() => _app.Repl();
-        #endregion
+        public void ReplTest() => _app?.Repl();
     }
 }

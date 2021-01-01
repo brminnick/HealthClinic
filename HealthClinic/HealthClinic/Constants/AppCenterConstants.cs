@@ -26,19 +26,11 @@ namespace HealthClinic
 
         public static string AppCenterAPIKey => GetApiKey();
 
-        static string GetApiKey()
+        static string GetApiKey() => Device.RuntimePlatform switch
         {
-            switch (Device.RuntimePlatform)
-            {
-                case Device.iOS:
-                    return AppCenterAPIKey_iOS;
-
-                case Device.Android:
-                    return AppCenterAPIKey_Droid;
-
-                default:
-                    throw new NotSupportedException();
-            }
-        }
+            Device.iOS => AppCenterAPIKey_iOS,
+            Device.Android => AppCenterAPIKey_Droid,
+            _ => throw new NotSupportedException(),
+        };
     }
 }

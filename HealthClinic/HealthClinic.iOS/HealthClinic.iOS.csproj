@@ -9,6 +9,9 @@
         <RootNamespace>HealthClinic.iOS</RootNamespace>
         <AssemblyName>HealthClinic.iOS</AssemblyName>
         <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+        <Nullable>enable</Nullable>
+        <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+        <LangVersion>latest</LangVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
         <DebugSymbols>true</DebugSymbols>
@@ -88,14 +91,15 @@
         <Reference Include="System.Net.Http" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Xam.Plugin.Media" Version="4.0.1.5" />
-        <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+        <PackageReference Include="Xam.Plugin.Media" Version="5.0.1" />
+        <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
         <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
-        <PackageReference Include="Xamarin.Forms" Version="4.1.0.555618" />
-        <PackageReference Include="Microsoft.AppCenter.Analytics" Version="2.1.1" />
-        <PackageReference Include="Microsoft.AppCenter.Crashes" Version="2.1.1" />
-        <PackageReference Include="AsyncAwaitBestPractices.MVVM" Version="3.0.0-pre2" />
-        <PackageReference Include="Xamarin.TestCloud.Agent" Version="0.21.8" />
+        <PackageReference Include="Xamarin.Forms" Version="5.0.0.1829-pre6" />
+        <PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.0.0" />
+        <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.0.0" />
+        <PackageReference Include="AsyncAwaitBestPractices.MVVM" Version="5.0.2" />
+        <PackageReference Include="Xamarin.TestCloud.Agent" Version="0.22.1" />
+        <PackageReference Include="Xamarin.Essentials" Version="1.6.1-preview1" />
     </ItemGroup>
     <ItemGroup>
         <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
@@ -122,6 +126,7 @@
         <Compile Include="Custom Renderers\ViewCellCustomRenderer.cs" />
         <Compile Include="Custom Renderers\NavigationPageCustomRenderer.cs" />
         <Compile Include="Custom Renderers\ListViewCustomRenderer.cs" />
+        <Compile Include="AppDelegate.BackdoorMethods.cs" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\HealthClinic\HealthClinic.csproj">

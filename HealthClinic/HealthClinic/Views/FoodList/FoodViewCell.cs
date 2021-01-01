@@ -1,97 +1,92 @@
-﻿using Xamarin.Forms;
-
-using HealthClinic.Shared;
+﻿using HealthClinic.Shared;
+using Xamarin.CommunityToolkit.Markup;
+using Xamarin.Forms;
+using static HealthClinic.MarkupExtensions;
+using static Xamarin.CommunityToolkit.Markup.GridRowsColumns;
 
 namespace HealthClinic
 {
     public class FoodViewCell : ViewCell
     {
-        #region Constructors
         public FoodViewCell()
         {
-            var foodDescriptionLabel = new Label
-            {
-                HorizontalTextAlignment = TextAlignment.Center,
-                VerticalTextAlignment = TextAlignment.Start,
-                FontSize = 20,
-                FontAttributes = FontAttributes.Bold,
-                TextColor = ColorConstants.Maroon
-            };
-            foodDescriptionLabel.SetBinding(Label.TextProperty, nameof(FoodLogModel.Description_PascalCase));
-
-            var quantityTitleLabel = new FoodViewCellTitleLabel { Text = "Quantity" };
-            var quantityDetailsLabel = new FoodViewCellDetailsLabel();
-            quantityDetailsLabel.SetBinding(Label.TextProperty, nameof(FoodLogModel.Quantity));
-
-            var mealTimeTitleLabel = new FoodViewCellTitleLabel { Text = "Meal Time" };
-            var mealTimeDetailsLabel = new FoodViewCellDetailsLabel();
-            mealTimeDetailsLabel.SetBinding(Label.TextProperty, nameof(FoodLogModel.MealTime_Formatted));
-
-            var caloriesTitleLabel = new FoodViewCellTitleLabel { Text = "Calories" };
-            var caloriesDetailsLabel = new FoodViewCellDetailsLabel();
-            caloriesDetailsLabel.SetBinding(Label.TextProperty, nameof(FoodLogModel.Calories));
-
-            var proteinTitleLabel = new FoodViewCellTitleLabel { Text = "Protein" };
-            var proteinDetailsLabel = new FoodViewCellDetailsLabel();
-            proteinDetailsLabel.SetBinding(Label.TextProperty, nameof(FoodLogModel.Protein_Formatted));
-
-            var fatTitleLabel = new FoodViewCellTitleLabel { Text = "Fat" };
-            var fatDetailsLabel = new FoodViewCellDetailsLabel();
-            fatDetailsLabel.SetBinding(Label.TextProperty, nameof(FoodLogModel.Fat_Formatted));
-
-            var carbsTitleLabel = new FoodViewCellTitleLabel { Text = "Carbs" };
-            var carbsDetailsLabel = new FoodViewCellDetailsLabel();
-            carbsDetailsLabel.SetBinding(Label.TextProperty, nameof(FoodLogModel.Carbohydrates_Formatted));
-
-            var grid = new Grid
-            {
-                RowSpacing = 1,
-                RowDefinitions = {
-                    new RowDefinition { Height = new GridLength(40, GridUnitType.Absolute) },
-                    new RowDefinition { Height = new GridLength(30, GridUnitType.Absolute) },
-                    new RowDefinition { Height = new GridLength(30, GridUnitType.Absolute) },
-                    new RowDefinition { Height = new GridLength(30, GridUnitType.Absolute) },
-                    new RowDefinition { Height = new GridLength(30, GridUnitType.Absolute) },
-                },
-                ColumnDefinitions = {
-                    new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
-                    new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
-                    new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
-                }
-            };
-
-            grid.Children.Add(foodDescriptionLabel, 0, 0);
-            Grid.SetColumnSpan(foodDescriptionLabel, 3);
-
-            grid.Children.Add(quantityTitleLabel, 0, 1);
-            grid.Children.Add(quantityDetailsLabel, 0, 2);
-
-            grid.Children.Add(mealTimeTitleLabel, 1, 1);
-            grid.Children.Add(mealTimeDetailsLabel, 1, 2);
-
-            grid.Children.Add(caloriesTitleLabel, 2, 1);
-            grid.Children.Add(caloriesDetailsLabel, 2, 2);
-
-            grid.Children.Add(proteinTitleLabel, 0, 3);
-            grid.Children.Add(proteinDetailsLabel, 0, 4);
-
-            grid.Children.Add(fatTitleLabel, 1, 3);
-            grid.Children.Add(fatDetailsLabel, 1, 4);
-
-            grid.Children.Add(carbsTitleLabel, 2, 3);
-            grid.Children.Add(carbsDetailsLabel, 2, 4);
-
             View = new Frame
             {
-                BackgroundColor = ColorConstants.Aqua,
+                HasShadow = true,
                 Margin = new Thickness(20),
-                Content = grid,
-                HasShadow = true
+                BackgroundColor = ColorConstants.Aqua,
+
+                Content = new Grid
+                {
+                    RowSpacing = 1,
+                    RowDefinitions = Rows.Define(
+                        (Row.Food, AbsoluteGridLength(40)),
+                        (Row.Title1, AbsoluteGridLength(30)),
+                        (Row.Description1, AbsoluteGridLength(30)),
+                        (Row.Title2, AbsoluteGridLength(30)),
+                        (Row.Description2, AbsoluteGridLength(30))),
+
+                    ColumnDefinitions = Columns.Define(
+                        (Column.Column1, Star),
+                        (Column.Column2, Star),
+                        (Column.Column3, Star)),
+
+                    Children =
+                    {
+                        new Label { TextColor = ColorConstants.Maroon }.TextCenterHorizontal().TextTop().Font(size: 20, bold: true)
+                            .Row(Row.Food).ColumnSpan(All<Column>())
+                            .Bind(Label.TextProperty, nameof(FoodLogModel.Description_PascalCase)),
+
+                        new FoodViewCellTitleLabel { Text = "Quantity" }
+                            .Row(Row.Title1).Column(Column.Column1),
+
+                        new FoodViewCellDetailsLabel()
+                            .Row(Row.Description1).Column(Column.Column1)
+                            .Bind(Label.TextProperty, nameof(FoodLogModel.Quantity)),
+
+                        new FoodViewCellTitleLabel { Text = "Meal Time" }
+                            .Row(Row.Title1).Column(Column.Column2),
+
+                        new FoodViewCellDetailsLabel()
+                            .Row(Row.Description1).Column(Column.Column2)
+                            .Bind(Label.TextProperty, nameof(FoodLogModel.MealTime_Formatted)),
+
+                        new FoodViewCellTitleLabel { Text = "Calories" }
+                            .Row(Row.Title1).Column(Column.Column3),
+
+                        new FoodViewCellDetailsLabel()
+                            .Row(Row.Description1).Column(Column.Column3)
+                            .Bind(Label.TextProperty, nameof(FoodLogModel.Calories)),
+
+                        new FoodViewCellTitleLabel { Text = "Protein" }
+                            .Row(Row.Title2).Column(Column.Column1),
+
+                        new FoodViewCellDetailsLabel()
+                            .Row(Row.Description2).Column(Column.Column1)
+                            .Bind(Label.TextProperty, nameof(FoodLogModel.Protein_Formatted)),
+
+
+                        new FoodViewCellTitleLabel { Text = "Fat" }
+                            .Row(Row.Title2).Column(Column.Column2),
+
+                        new FoodViewCellDetailsLabel()
+                            .Row(Row.Description2).Column(Column.Column2)
+                            .Bind(Label.TextProperty, nameof(FoodLogModel.Fat_Formatted)),
+
+                        new FoodViewCellTitleLabel { Text = "Carbs" }
+                            .Row(Row.Title2).Column(Column.Column3),
+
+                        new FoodViewCellDetailsLabel()
+                            .Row(Row.Description2).Column(Column.Column3)
+                            .Bind(Label.TextProperty, nameof(FoodLogModel.Carbohydrates_Formatted))
+                    }
+                }
             };
         }
-        #endregion
 
-        #region Classes
+        enum Row { Food, Title1, Description1, Title2, Description2 }
+        enum Column { Column1, Column2, Column3 }
+
         class FoodViewCellTitleLabel : Label
         {
             public FoodViewCellTitleLabel()
@@ -114,6 +109,11 @@ namespace HealthClinic
                 Margin = new Thickness(0);
             }
         }
-        #endregion
+    }
+
+    static class MarkupExtensions
+    {
+        public static GridLength AbsoluteGridLength(double value) => new GridLength(value, GridUnitType.Absolute);
+        public static GridLength AbsoluteGridLength(int value) => AbsoluteGridLength((double)value);
     }
 }

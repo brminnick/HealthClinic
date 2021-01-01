@@ -6,11 +6,9 @@ namespace HealthClinic.Shared
     {
         public static byte[] ConvertStreamToByteArrary(Stream stream)
         {
-            using (var memoryStream = new MemoryStream())
-            {
-                stream.CopyTo(memoryStream);
-                return memoryStream.ToArray();
-            }
+            using var memoryStream = new MemoryStream();
+            stream.CopyTo(memoryStream);
+            return memoryStream.ToArray();
         }
     }
 }

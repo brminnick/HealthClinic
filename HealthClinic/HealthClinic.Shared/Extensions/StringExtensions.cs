@@ -10,7 +10,7 @@ namespace HealthClinic.Shared
             var resultBuilder = new System.Text.StringBuilder();
             foreach (char c in input)
             {
-                if (!Char.IsLetterOrDigit(c))
+                if (!char.IsLetterOrDigit(c))
                     resultBuilder.Append(" ");
                 else
                     resultBuilder.Append(c);
@@ -20,11 +20,9 @@ namespace HealthClinic.Shared
             result = result.ToLower();
 
             var textInfo = new CultureInfo("en-US", false).TextInfo;
-
-            return textInfo.ToTitleCase(result).Replace(" ", String.Empty);
+            return textInfo.ToTitleCase(result);
         }
 
-        public static string ToMonthDayYear(this DateTime input) => 
-            $"{input.ToString("MMM")} {input.Day}, '{input.ToString("yy")}";
+        public static string ToMonthDayYear(this DateTime input) => $"{input:MMM} {input.Day}, '{input:yy}";
     }
 }

@@ -1,26 +1,22 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
-
-using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Analytics;
-
-using HealthClinic.Shared;
+using Microsoft.AppCenter.Crashes;
 
 namespace HealthClinic
 {
     public static class AppCenterService
     {
-        #region Methods
         public static void Start() => Start(AppCenterConstants.AppCenterAPIKey);
 
-        public static void TrackEvent(string trackIdentifier, IDictionary<string, string> table = null) =>
+        public static void TrackEvent(string trackIdentifier, IDictionary<string, string>? table = null) =>
             Analytics.TrackEvent(trackIdentifier, table);
 
         public static void TrackEvent(string trackIdentifier, string key, string value)
         {
-            IDictionary<string, string> table = new Dictionary<string, string> { { key, value } };
+            IDictionary<string, string>? table = new Dictionary<string, string> { { key, value } };
 
             if (string.IsNullOrWhiteSpace(key) && string.IsNullOrWhiteSpace(value))
                 table = null;
@@ -29,7 +25,7 @@ namespace HealthClinic
         }
 
         public static void Report(Exception exception,
-                          IDictionary<string, string> properties = null,
+                          IDictionary<string, string>? properties = null,
                           [CallerMemberName] string callerMemberName = "",
                           [CallerLineNumber] int lineNumber = 0,
                           [CallerFilePath] string filePath = "")
@@ -56,6 +52,5 @@ namespace HealthClinic
         }
 
         static void Start(string apiKey) => Microsoft.AppCenter.AppCenter.Start(apiKey, typeof(Analytics), typeof(Crashes));
-        #endregion
     }
 }

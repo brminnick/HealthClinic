@@ -1,31 +1,24 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-using AsyncAwaitBestPractices;
-
 using Plugin.Media;
 using Plugin.Media.Abstractions;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace HealthClinic
 {
     public static class MediaService
     {
-        #region Constant Fields
-        readonly static WeakEventManager _noCameraFoundEventManager = new WeakEventManager();
-        #endregion
+        readonly static AsyncAwaitBestPractices.WeakEventManager _noCameraFoundEventManager = new();
 
-        #region Events
         public static event EventHandler NoCameraFound
         {
             add => _noCameraFoundEventManager.AddEventHandler(value);
             remove => _noCameraFoundEventManager.RemoveEventHandler(value);
         }
-        #endregion
 
-        #region Methods
-        public static async Task<MediaFile> GetMediaFileFromCamera()
+        public static async Task<MediaFile?> GetMediaFileFromCamera()
         {
             await CrossMedia.Current.Initialize().ConfigureAwait(false);
 
@@ -35,20 +28,13 @@ namespace HealthClinic
                 return null;
             }
 
-            var mediaFileTCS = new TaskCompletionSource<MediaFile>();
-            Device.BeginInvokeOnMainThread(async () =>
+            return await MainThread.InvokeOnMainThreadAsync(() => CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
             {
-                mediaFileTCS.SetResult(await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
-                {
-                    PhotoSize = PhotoSize.Small,
-                    DefaultCamera = CameraDevice.Rear
-                }));
-            });
-
-            return await mediaFileTCS.Task;
+                PhotoSize = PhotoSize.Small,
+                DefaultCamera = CameraDevice.Rear
+            })).ConfigureAwait(false);
         }
 
-        static void OnNoCameraFound() => _noCameraFoundEventManager.HandleEvent(null, EventArgs.Empty, nameof(NoCameraFound));
-        #endregion
+        static void OnNoCameraFound() => _noCameraFoundEventManager.RaiseEvent(null, EventArgs.Empty, nameof(NoCameraFound));
     }
 }

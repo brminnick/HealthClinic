@@ -16,8 +16,8 @@ namespace HealthClinic.iOS
         {
             base.OnElementChanged(e);
 
-            var refreshControl = Control?.Subviews?.FirstOrDefault(x => x is UIRefreshControl) as UIRefreshControl;
-            if (refreshControl == null)
+            var refreshControl = Control?.Subviews?.OfType<UIRefreshControl>().FirstOrDefault();
+            if (refreshControl is null)
                 return;
 
             refreshControl.TintColor = ColorConstants.OffWhite.ToUIColor();

@@ -4,18 +4,13 @@ namespace HealthClinic
 {
     public abstract class BaseContentPage<T> : ContentPage where T : BaseViewModel, new()
     {
-        #region Constructors
         protected BaseContentPage(string pageTitle)
         {
-            ViewModel = new T();
-            BindingContext = ViewModel;
             Title = pageTitle;
+            BindingContext = ViewModel;
             BackgroundColor = ColorConstants.Aqua;
         }
-        #endregion
 
-        #region Properties
-        protected T ViewModel { get; }
-        #endregion
+        protected T ViewModel { get; } = new T();
     }
 }

@@ -1,14 +1,12 @@
-﻿using UIKit;
-
+﻿using HealthClinic.iOS;
+using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
-
-using HealthClinic.iOS;
 
 [assembly: ExportRenderer(typeof(ViewCell), typeof(ViewCellCustomRenderer))]
 namespace HealthClinic.iOS
 {
-	public class ViewCellCustomRenderer : ViewCellRenderer
+    public class ViewCellCustomRenderer : ViewCellRenderer
 	{
 		public override UITableViewCell GetCell(Cell item, UITableViewCell reusableCell, UITableView tv)
 		{

@@ -9,20 +9,15 @@ namespace HealthClinic
 {
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
-        #region Constant Fields
         readonly WeakEventManager _notifyPropertyChangedEventManager = new WeakEventManager();
-        #endregion
 
-        #region Events
         event PropertyChangedEventHandler INotifyPropertyChanged.PropertyChanged
         {
             add => _notifyPropertyChangedEventManager.AddEventHandler(value);
             remove => _notifyPropertyChangedEventManager.RemoveEventHandler(value);
         }
-        #endregion
 
-        #region Methods
-        protected void SetProperty<T>(ref T backingStore, T value, Action onChanged = null, [CallerMemberName] string propertyname = "")
+        protected void SetProperty<T>(ref T backingStore, T value, Action? onChanged = null, [CallerMemberName] string propertyname = "")
         {
             if (EqualityComparer<T>.Default.Equals(backingStore, value))
                 return;
@@ -35,7 +30,6 @@ namespace HealthClinic
         }
 
         void OnPropertyChanged([CallerMemberName]string propertyName = "") =>
-            _notifyPropertyChangedEventManager?.HandleEvent(this, new PropertyChangedEventArgs(propertyName), nameof(INotifyPropertyChanged.PropertyChanged));
-        #endregion
+            _notifyPropertyChangedEventManager?.RaiseEvent(this, new PropertyChangedEventArgs(propertyName), nameof(INotifyPropertyChanged.PropertyChanged));
     }
 }

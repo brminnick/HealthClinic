@@ -1,32 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-
-using Xamarin.Forms;
-
 using HealthClinic.Shared;
+using Xamarin.CommunityToolkit.Markup;
+using Xamarin.Forms;
 
 namespace HealthClinic
 {
     public class FoodListPage : BaseContentPage<FoodListViewModel>
     {
-        #region Constant Fields
         readonly ListView _foodListView;
-        readonly ToolbarItem _addFoodButton;
-        #endregion
 
-        #region Constructors
         public FoodListPage() : base(PageTitleConstants.FoodListPage)
         {
-            _addFoodButton = new ToolbarItem
+            ToolbarItems.Add(new ToolbarItem
             {
                 Text = "+",
                 AutomationId = AutomationIdConstants.FoodListPage_AddFoodButton
-            };
-            _addFoodButton.Clicked += HandleAddFoodButtonClicked;
+            }.Invoke(addFoodButton => addFoodButton.Clicked += HandleAddFoodButtonClicked));
 
-            ToolbarItems.Add(_addFoodButton);
-
-            _foodListView = new ListView(ListViewCachingStrategy.RecycleElement)
+            Content = new ListView(ListViewCachingStrategy.RecycleElement)
             {
                 ItemTemplate = new DataTemplate(typeof(FoodViewCell)),
                 IsPullToRefreshEnabled = true,
@@ -34,17 +25,12 @@ namespace HealthClinic
                 BackgroundColor = ColorConstants.OffWhite,
                 SeparatorVisibility = SeparatorVisibility.None,
                 RowHeight = 230
-            };
-            _foodListView.ItemTapped += HandleItemTapped;
-            _foodListView.SetBinding(ListView.ItemsSourceProperty, nameof(ViewModel.FoodList));
-            _foodListView.SetBinding(ListView.IsRefreshingProperty, nameof(ViewModel.IsRefreshing));
-            _foodListView.SetBinding(ListView.RefreshCommandProperty, nameof(ViewModel.PullToRefreshCommand));
-
-            Content = _foodListView;
+            }.Bind(ListView.ItemsSourceProperty, nameof(ViewModel.FoodList))
+             .Bind(ListView.IsRefreshingProperty, nameof(ViewModel.IsRefreshing))
+             .Bind(ListView.RefreshCommandProperty, nameof(ViewModel.PullToRefreshCommand))
+             .Assign(out _foodListView)
+             .Invoke(listView => listView.ItemTapped += HandleItemTapped);
         }
-        #endregion
-
-        #region Methods
         protected override void OnAppearing()
         {
             base.OnAppearing();
@@ -62,14 +48,11 @@ namespace HealthClinic
 
         void HandleItemTapped(object sender, ItemTappedEventArgs e)
         {
-            if (e.Item is FoodLogModel itemTapped)
-            {
-                AppCenterService.TrackEvent(AppCenterConstants.FoodListItemTapped,
-                                            new Dictionary<string, string> { { AppCenterConstants.Description, itemTapped?.Description_PascalCase } });
+            var listView = (ListView)sender;
+            listView.SelectedItem = null;
 
-                _foodListView.SelectedItem = null;
-            }
+            if (e.Item is FoodLogModel itemTapped)
+                AppCenterService.TrackEvent(AppCenterConstants.FoodListItemTapped, AppCenterConstants.Description, itemTapped.Description_PascalCase);
         }
-        #endregion
     }
 }

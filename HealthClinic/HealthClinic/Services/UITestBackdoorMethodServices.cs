@@ -13,29 +13,24 @@ namespace HealthClinic
 {
     public static class UITestBackdoorMethodServices
     {
-        #region Constant Fields
         const string _testFoodDescription = "pizza";
-        #endregion
 
-        #region Fields
-        static AddFoodViewModel _addFoodViewModel;
-        static Stream _testImageAsStream;
-        static byte[] _testImageAsByteArray;
-        #endregion
+        static AddFoodViewModel? _addFoodViewModel;
+        static Stream? _testImageAsStream;
+        static byte[]? _testImageAsByteArray;
 
-        #region Properties
         static AddFoodViewModel AddFoodViewModel
         {
             get
             {
                 if (_addFoodViewModel is null)
                 {
-                    var mainPageNavigationPage = Application.Current.MainPage as HealthClinicNavigationPage;
-                    var addFoodPageNavigationPage = mainPageNavigationPage.Navigation.ModalStack.FirstOrDefault() as HealthClinicNavigationPage;
+                    var mainPageNavigationPage = (HealthClinicNavigationPage)Application.Current.MainPage;
+                    var addFoodPageNavigationPage = (NavigationPage)mainPageNavigationPage.Navigation.ModalStack.First();
 
-                    var addFoodPage = addFoodPageNavigationPage?.CurrentPage as AddFoodPage;
+                    var addFoodPage = (AddFoodPage)addFoodPageNavigationPage.CurrentPage;
 
-                    _addFoodViewModel = addFoodPage?.BindingContext as AddFoodViewModel;
+                    _addFoodViewModel = (AddFoodViewModel)addFoodPage.BindingContext;
                 }
 
                 return _addFoodViewModel;
@@ -66,9 +61,7 @@ namespace HealthClinic
                 return _testImageAsByteArray;
             }
         }
-        #endregion
 
-        #region Methods
         public static Task PostTestImageToAPI() => FoodListAPIService.PostFoodPhoto(TestImageAsByteArray);
 
         public static async Task DeleteTestFoodFromAPI()
@@ -88,7 +81,6 @@ namespace HealthClinic
             AddFoodViewModel.PhotoBlob = TestImageAsByteArray;
             AddFoodViewModel.PhotoImageSource = ImageSource.FromStream(() => TestImageAsStream);
         }
-        #endregion
     }
 }
 #endif

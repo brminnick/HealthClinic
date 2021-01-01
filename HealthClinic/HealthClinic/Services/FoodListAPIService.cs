@@ -8,10 +8,10 @@ namespace HealthClinic
 {
     public abstract class FoodListAPIService : BaseHttpClientService
     {
-        public static Task<List<FoodLogModel>> GetFoodLogs()
+        public static Task<IReadOnlyList<FoodLogModel>> GetFoodLogs()
         {
             AppCenterService.TrackEvent(AppCenterConstants.GetFoodLogsFromAPITriggered);
-            return GetObjectFromAPI<List<FoodLogModel>>(APIConstants.GetFoodLogsUrl);
+            return GetObjectFromAPI<IReadOnlyList<FoodLogModel>>(APIConstants.GetFoodLogsUrl);
         }
 
         public static Task<HttpResponseMessage> PostFoodPhoto(byte[] foodPhoto)

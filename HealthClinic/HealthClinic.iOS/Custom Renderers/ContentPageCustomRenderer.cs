@@ -1,12 +1,9 @@
-﻿using System.Linq;
-using System.Collections.Generic;
-
+﻿using System.Collections.Generic;
+using System.Linq;
+using HealthClinic.iOS;
 using UIKit;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
-
-using HealthClinic.iOS;
 
 [assembly: ExportRenderer(typeof(ContentPage), typeof(ContentPageCustomRenderer))]
 namespace HealthClinic.iOS
@@ -17,36 +14,39 @@ namespace HealthClinic.iOS
         {
             base.ViewWillAppear(animated);
 
-            var thisElement = Element as ContentPage;
+            var contentPage = (ContentPage)Element;
 
             var leftNavList = new List<UIBarButtonItem>();
             var rightNavList = new List<UIBarButtonItem>();
 
             var navigationItem = NavigationController.TopViewController.NavigationItem;
 
-            if (navigationItem?.LeftBarButtonItems?.Any() == true)
+            if (navigationItem?.LeftBarButtonItems?.Any() is true)
                 return;
 
-            for (var i = 0; i < thisElement.ToolbarItems.Count; i++)
+            for (var i = 0; i < contentPage.ToolbarItems.Count; i++)
             {
+                var reorder = contentPage.ToolbarItems.Count - 1;
+                var itemPriority = contentPage.ToolbarItems[reorder - i].Priority;
 
-                var reorder = (thisElement.ToolbarItems.Count - 1);
-                var itemPriority = thisElement.ToolbarItems[reorder - i].Priority;
-
-                if (itemPriority == 1)
+                if (itemPriority is 1)
                 {
-                    UIBarButtonItem LeftNavItems = navigationItem.RightBarButtonItems[i];
-                    leftNavList.Add(LeftNavItems);
+                    var leftNavItems = navigationItem?.RightBarButtonItems?[i];
+
+                    if (leftNavItems is not null)
+                        leftNavList.Add(leftNavItems);
                 }
-                else if (itemPriority == 0)
+                else if (itemPriority is 0)
                 {
-                    UIBarButtonItem RightNavItems = navigationItem.RightBarButtonItems[i];
-                    rightNavList.Add(RightNavItems);
+                    var rightNavItems = navigationItem?.RightBarButtonItems?[i];
+
+                    if (rightNavItems is not null)
+                        rightNavList.Add(rightNavItems);
                 }
             }
 
-            navigationItem.SetLeftBarButtonItems(leftNavList.ToArray(), false);
-            navigationItem.SetRightBarButtonItems(rightNavList.ToArray(), false);
+            navigationItem?.SetLeftBarButtonItems(leftNavList.ToArray(), false);
+            navigationItem?.SetRightBarButtonItems(rightNavList.ToArray(), false);
         }
     }
 }

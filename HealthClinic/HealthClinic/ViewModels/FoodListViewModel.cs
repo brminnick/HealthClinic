@@ -1,25 +1,20 @@
-﻿using System.Linq;
-using System.Windows.Input;
-using System.Threading.Tasks;
+﻿using System;
 using System.Collections.Generic;
-
-using HealthClinic.Shared;
-
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using AsyncAwaitBestPractices.MVVM;
+using HealthClinic.Shared;
 
 namespace HealthClinic
 {
     public class FoodListViewModel : BaseViewModel
     {
-        #region Fields
         bool _isRefreshing;
-        List<FoodLogModel> _foodList;
-        ICommand _pullToRefreshCommand;
-        #endregion
+        ICommand? _pullToRefreshCommand;
+        IReadOnlyList<FoodLogModel> _foodList = Array.Empty<FoodLogModel>();
 
-        #region Properties
-        public ICommand PullToRefreshCommand => _pullToRefreshCommand ??
-            (_pullToRefreshCommand = new AsyncCommand(ExecutePullToRefreshCommand));
+        public ICommand PullToRefreshCommand => _pullToRefreshCommand ??= new AsyncCommand(ExecutePullToRefreshCommand);
 
         public bool IsRefreshing
         {
@@ -27,14 +22,12 @@ namespace HealthClinic
             set => SetProperty(ref _isRefreshing, value);
         }
 
-        public List<FoodLogModel> FoodList
+        public IReadOnlyList<FoodLogModel> FoodList
         {
             get => _foodList;
             set => SetProperty(ref _foodList, value);
         }
-        #endregion
 
-        #region Methods
         async Task ExecutePullToRefreshCommand()
         {
             IsRefreshing = true;
@@ -49,6 +42,5 @@ namespace HealthClinic
                 IsRefreshing = false;
             }
         }
-        #endregion
     }
 }

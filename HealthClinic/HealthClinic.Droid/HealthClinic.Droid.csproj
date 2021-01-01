@@ -8,13 +8,16 @@
         <OutputType>Library</OutputType>
         <RootNamespace>HealthClinic.Droid</RootNamespace>
         <AssemblyName>HealthClinic.Droid</AssemblyName>
-        <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
+        <TargetFrameworkVersion>v11.0</TargetFrameworkVersion>
         <AndroidApplication>True</AndroidApplication>
         <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
         <AndroidResgenClass>Resource</AndroidResgenClass>
         <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
         <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
         <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
+        <Nullable>enable</Nullable>
+        <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+        <LangVersion>latest</LangVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <DebugSymbols>true</DebugSymbols>
@@ -27,7 +30,6 @@
         <AndroidLinkMode>None</AndroidLinkMode>
         <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
         <AndroidTlsProvider>btls</AndroidTlsProvider>
-        <AndroidSupportedAbis>arm64-v8a;armeabi-v7a;x86;x86_64</AndroidSupportedAbis>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
         <DebugSymbols>true</DebugSymbols>
@@ -53,18 +55,20 @@
         <Reference Include="Mono.Android.Export" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Xam.Plugin.Media" Version="4.0.1.5" />
-        <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+        <PackageReference Include="Xam.Plugin.Media" Version="5.0.1" />
+        <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
         <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
-        <PackageReference Include="Xamarin.Forms" Version="4.1.0.555618" />
-        <PackageReference Include="Microsoft.AppCenter.Analytics" Version="2.1.1" />
-        <PackageReference Include="Microsoft.AppCenter.Crashes" Version="2.1.1" />
-        <PackageReference Include="AsyncAwaitBestPractices.MVVM" Version="3.0.0-pre2" />
+        <PackageReference Include="Xamarin.Forms" Version="5.0.0.1829-pre6" />
+        <PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.0.0" />
+        <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.0.0" />
+        <PackageReference Include="AsyncAwaitBestPractices.MVVM" Version="5.0.2" />
+        <PackageReference Include="Xamarin.Essentials" Version="1.6.1-preview1" />
     </ItemGroup>
     <ItemGroup>
         <Compile Include="MainActivity.cs" />
         <Compile Include="Resources\Resource.designer.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="MainActivity.BackdoorMethods.cs" />
     </ItemGroup>
     <ItemGroup>
         <None Include="Resources\AboutResources.txt" />

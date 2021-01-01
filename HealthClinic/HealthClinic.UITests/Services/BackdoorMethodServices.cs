@@ -1,64 +1,24 @@
 ﻿using Xamarin.UITest;
-
 using Xamarin.UITest.iOS;
 using Xamarin.UITest.Android;
+using System;
 
 namespace HealthClinic.UITests
 {
-    public static class BackdoorMethodServices
+    static class BackdoorServices
     {
-        internal static void PostTestImageToAPI(IApp app)
+        public static object InvokeBackdoorMethod(this IApp app, string backdoorMethodName, string parameter = "") => app switch
         {
-            switch (app)
-            {
-                case iOSApp app_iOS:
-                    app_iOS.Invoke("postTestImageToAPI:", "");
-                    break;
-                case AndroidApp app_Android:
-                    app_Android.Invoke("PostTestImageToAPI");
-                    break;
+            iOSApp iosApp => iosApp.Invoke(backdoorMethodName + ":", parameter),
+            AndroidApp androidApp when string.IsNullOrWhiteSpace(parameter) => androidApp.Invoke(backdoorMethodName),
+            AndroidApp androidApp => androidApp.Invoke(backdoorMethodName, parameter),
+            _ => throw new NotSupportedException("Platform Not Supported"),
+        };
 
-                default:
-                    throw new System.NotSupportedException($"IApp {typeof(IApp)} is not supported");
-            }
-
-            app.Screenshot("Uploaded Image to API");
-        }
-
-        internal static void InjectImageIntoAddFoodPage(IApp app)
+        public static T InvokeBackdoorMethod<T>(this IApp app, string backdoorMethodName, string parameter = "")
         {
-            switch (app)
-            {
-                case iOSApp app_iOS:
-                    app_iOS.Invoke("injectImageIntoAddFoodPage:", "");
-                    break;
-                case AndroidApp app_Android:
-                    app_Android.Invoke("InjectImageIntoAddFoodPage");
-                    break;
-
-                default:
-                    throw new System.NotSupportedException($"IApp {typeof(IApp)} is not supported");
-            }
-
-            app.Screenshot("Injected Image Into Add Food Page");
-        }
-
-        internal static void DeleteTestFoodFromAPI(IApp app)
-        {
-            switch (app)
-            {
-                case iOSApp app_iOS:
-                    app_iOS.Invoke("deleteTestFoodFromAPI:", "");
-                    break;
-                case AndroidApp app_Android:
-                    app_Android.Invoke("DeleteTestFoodFromAPI");
-                    break;
-
-                default:
-                    throw new System.NotSupportedException($"IApp {typeof(IApp)} is not supported");
-            }
-
-            app.Screenshot("Deleted Test Food From Backedn");
+            var result = app.InvokeBackdoorMethod(backdoorMethodName, parameter).ToString();
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(result);
         }
     }
 }

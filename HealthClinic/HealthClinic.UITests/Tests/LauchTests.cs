@@ -4,7 +4,7 @@ using Xamarin.UITest;
 
 namespace HealthClinic.UITests
 {
-    public class LauchTests : BaseTest
+    class LauchTests : BaseTest
     {
         public LauchTests(Platform platform) : base(platform)
         {

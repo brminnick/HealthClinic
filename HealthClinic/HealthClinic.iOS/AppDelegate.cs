@@ -1,7 +1,6 @@
-﻿using System.Threading.Tasks;
-
+﻿using Foundation;
+using HealthClinic.Shared;
 using UIKit;
-using Foundation;
 
 namespace HealthClinic.iOS
 {
@@ -14,27 +13,9 @@ namespace HealthClinic.iOS
             FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
             FFImageLoading.Forms.Platform.CachedImageRenderer.InitImageSourceHandler();
 
-#if DEBUG
-            Xamarin.Calabash.Start();
-#endif
-
             LoadApplication(new App());
 
             return base.FinishedLaunching(uiApplication, launchOptions);
         }
-
-        #region BackdoorMethods
-#if DEBUG
-        [Export("postTestImageToAPI:")]
-        public async void PostTestImageToAPI(NSString unusedString) => await UITestBackdoorMethodServices.PostTestImageToAPI().ConfigureAwait(false);
-
-        [Export("deleteTestFoodFromAPI:")]
-        public async void DeleteTestFoodFromAPI(NSString unusedString) => await UITestBackdoorMethodServices.DeleteTestFoodFromAPI().ConfigureAwait(false);
-        
-        [Export("injectImageIntoAddFoodPage:")]
-        public void InjectImageIntoAddFoodPage(NSString unusedString) => UITestBackdoorMethodServices.InjectImageIntoAddFoodPage();
-#endif
-
-        #endregion
     }
 }

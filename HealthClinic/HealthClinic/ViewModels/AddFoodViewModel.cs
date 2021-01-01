@@ -1,30 +1,23 @@
 ﻿using System;
 using System.IO;
-using System.Windows.Input;
 using System.Threading.Tasks;
-
-using Xamarin.Forms;
-
-using HealthClinic.Shared;
+using System.Windows.Input;
 using AsyncAwaitBestPractices;
 using AsyncAwaitBestPractices.MVVM;
+using HealthClinic.Shared;
+using Xamarin.Forms;
 
 namespace HealthClinic
 {
     public class AddFoodViewModel : BaseViewModel
     {
-        #region Constant Fields
-        readonly WeakEventManager _uploadPhotoCompletedEventManager = new WeakEventManager();
-        readonly WeakEventManager<string> _uploadPhotoFailedEventManager = new WeakEventManager<string>();
-        #endregion
+        readonly AsyncAwaitBestPractices.WeakEventManager _uploadPhotoCompletedEventManager = new();
+        readonly WeakEventManager<string> _uploadPhotoFailedEventManager = new();
 
-        #region Fields
-        ICommand _takePhotoCommand, _uploadButtonCommand;
-        ImageSource _photoImageSource;
+        ICommand? _takePhotoCommand, _uploadButtonCommand;
+        ImageSource? _photoImageSource;
         bool _isPhotoUploading;
-        #endregion
 
-        #region Events
         public event EventHandler UploadPhotoCompleted
         {
             add => _uploadPhotoCompletedEventManager.AddEventHandler(value);
@@ -36,14 +29,9 @@ namespace HealthClinic
             add => _uploadPhotoFailedEventManager.AddEventHandler(value);
             remove => _uploadPhotoFailedEventManager.RemoveEventHandler(value);
         }
-        #endregion
 
-        #region Properties
-        public ICommand TakePhotoCommand => _takePhotoCommand ??
-            (_takePhotoCommand = new AsyncCommand(ExecuteTakePhotoCommand));
-
-        public ICommand UploadButtonCommand => _uploadButtonCommand ??
-            (_uploadButtonCommand = new AsyncCommand(ExecuteUploadButtonCommand));
+        public ICommand TakePhotoCommand => _takePhotoCommand ??= new AsyncCommand(ExecuteTakePhotoCommand);
+        public ICommand UploadButtonCommand => _uploadButtonCommand ??= new AsyncCommand(ExecuteUploadButtonCommand);
 
         public bool IsPhotoUploading
         {
@@ -51,16 +39,14 @@ namespace HealthClinic
             set => SetProperty(ref _isPhotoUploading, value);
         }
 
-        public ImageSource PhotoImageSource
+        public ImageSource? PhotoImageSource
         {
             get => _photoImageSource;
             set => SetProperty(ref _photoImageSource, value);
         }
 
-        public byte[] PhotoBlob { get; set; }
-        #endregion
+        public byte[]? PhotoBlob { get; set; }
 
-        #region Methods
         async Task ExecuteTakePhotoCommand()
         {
             var mediaFile = await MediaService.GetMediaFileFromCamera().ConfigureAwait(false);
@@ -97,7 +83,7 @@ namespace HealthClinic
                     return;
                 }
 
-                if (postPhotoBlobResponse is null || postPhotoBlobResponse?.IsSuccessStatusCode is false)
+                if (postPhotoBlobResponse is null || postPhotoBlobResponse.IsSuccessStatusCode is false)
                 {
                     OnUploadPhotoFailed($"Status Code: {postPhotoBlobResponse?.ReasonPhrase ?? "null"}");
                     return;
@@ -116,8 +102,7 @@ namespace HealthClinic
             }
         }
 
-        void OnUploadPhotoFailed(string errorMessage) => _uploadPhotoFailedEventManager.HandleEvent(this, errorMessage, nameof(UploadPhotoFailed));
-        void OnSavePhotoCompleted() => _uploadPhotoCompletedEventManager.HandleEvent(this, EventArgs.Empty, nameof(UploadPhotoCompleted));
-        #endregion
+        void OnUploadPhotoFailed(string errorMessage) => _uploadPhotoFailedEventManager.RaiseEvent(this, errorMessage, nameof(UploadPhotoFailed));
+        void OnSavePhotoCompleted() => _uploadPhotoCompletedEventManager.RaiseEvent(this, EventArgs.Empty, nameof(UploadPhotoCompleted));
     }
 }

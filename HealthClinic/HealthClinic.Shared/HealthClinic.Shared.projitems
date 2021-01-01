@@ -16,5 +16,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\FoodLogModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constants\APIConstants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Constants\HttpConstants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Constants\BackdoorMethodConstants.cs" />
   </ItemGroup>
 </Project>

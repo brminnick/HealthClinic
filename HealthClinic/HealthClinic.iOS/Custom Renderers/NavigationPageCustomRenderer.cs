@@ -1,9 +1,7 @@
-﻿using UIKit;
-
+﻿using HealthClinic.iOS;
+using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
-
-using HealthClinic.iOS;
 
 [assembly: ExportRenderer(typeof(NavigationPage), typeof(NavigationPageCustomRenderer))]
 namespace HealthClinic.iOS

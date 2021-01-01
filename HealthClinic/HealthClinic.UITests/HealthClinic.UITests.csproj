@@ -7,7 +7,9 @@
         <OutputType>Library</OutputType>
         <RootNamespace>HealthClinic.UITests</RootNamespace>
         <AssemblyName>HealthClinic.UITests</AssemblyName>
-        <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+        <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+        <Nullable>enable</Nullable>
+        <LangVersion>latest</LangVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <DebugSymbols>true</DebugSymbols>
@@ -29,7 +31,10 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="NUnit" Version="3.12.0" />
-        <PackageReference Include="Xamarin.UITest" Version="3.0.0" />
+        <PackageReference Include="Xamarin.UITest" Version="3.0.12" />
+        <PackageReference Include="Newtonsoft.Json">
+          <Version>12.0.3</Version>
+        </PackageReference>
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Tests\BaseTest.cs" />
